@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #203c56;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.JAVAFX.CRISTINADIAZCABELLO.controladores.ControladorDiario">
+   <children>
+      <Label text="Escribe sobre tu momento del día!" textFill="#ffd4a3">
+         <font>
+            <Font name="Tahoma Bold" size="16.0" />
+         </font>
+         <VBox.margin>
+            <Insets left="50.0" right="50.0" top="50.0" />
+         </VBox.margin>
+      </Label>
+      <TextField fx:id="txtDiario" alignment="TOP_CENTER" prefHeight="366.0" prefWidth="600.0" promptText="Escribe tu día..." style="-fx-background-color: #ffecd6;">
+         <VBox.margin>
+            <Insets bottom="50.0" left="50.0" right="50.0" top="10.0" />
+         </VBox.margin>
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </TextField>
+   </children>
+</VBox>

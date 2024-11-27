@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="417.0" prefWidth="638.0" style="-fx-background-color: #203c56;" stylesheets="@/css/styleControladorDia.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.JAVAFX.CRISTINADIAZCABELLO.controladores.ControladorDia">
+   <children>
+      <HBox prefHeight="42.0" prefWidth="638.0" style="-fx-background-color: #0d2b45;">
+         <children>
+            <ImageView fx:id="imgSave" fitHeight="24.0" fitWidth="24.0" onMouseClicked="#save" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@/img/save.png" />
+               </image>
+               <HBox.margin>
+                  <Insets left="10.0" right="10.0" top="10.0" />
+               </HBox.margin>
+            </ImageView>
+         </children>
+      </HBox>
+      <HBox prefHeight="341.0" prefWidth="638.0">
+         <children>
+            <VBox alignment="TOP_CENTER" prefHeight="346.0" prefWidth="280.0">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fx:id="imgTiempo" fitHeight="78.0" fitWidth="79.0" pickOnBounds="true" preserveRatio="true">
+                           <HBox.margin>
+                              <Insets right="30.0" />
+                           </HBox.margin>
+                           <image>
+                              <Image url="@/img/tiempo.png" />
+                           </image>
+                        </ImageView>
+                        <ComboBox id="comboTiempo" fx:id="cmbTiempo" prefHeight="32.0" prefWidth="134.0" promptText="Tiempo" style="-fx-background-color: #FFECD6;" />
+                     </children>
+                  </HBox>
+                  <ImageView fx:id="imgPostIt" fitHeight="251.0" fitWidth="260.0" onMouseClicked="#abrirRetos" pickOnBounds="true" preserveRatio="true">
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                     <image>
+                        <Image url="@/img/postit.png" />
+                     </image>
+                  </ImageView>
+               </children>
+               <HBox.margin>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
+               </HBox.margin>
+            </VBox>
+            <Line endX="-98.3071060180664" endY="346.4928894042969" startX="-100.0">
+               <HBox.margin>
+                  <Insets top="10.0" />
+               </HBox.margin></Line>
+            <VBox alignment="TOP_CENTER" prefHeight="376.0" prefWidth="318.0">
+               <children>
+                  <ImageView id="imgNoche" fx:id="imgFondo" fitHeight="107.0" fitWidth="284.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@/img/noche.png" />
+                     </image>
+                  </ImageView>
+                  <VBox prefHeight="57.0" prefWidth="286.0">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="18.0" prefWidth="286.0">
+                           <children>
+                              <ImageView fx:id="imgMoon" fitHeight="46.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                 <HBox.margin>
+                                    <Insets left="20.0" right="5.0" top="20.0" />
+                                 </HBox.margin>
+                                 <image>
+                                    <Image url="@/img/moon.png" />
+                                 </image>
+                              </ImageView>
+                              <Label fx:id="lbCalidadSueño" style="-fx-font-family: Montserrat Alternates;" styleClass="text" text="Calidad de sueño" textFill="#ffecd6">
+                                 <font>
+                                    <Font name="Tahoma Bold" size="19.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="20.0" right="20.0" top="20.0" />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <Slider fx:id="sliderSueño" prefHeight="14.0" prefWidth="244.0">
+                           <VBox.margin>
+                              <Insets bottom="10.0" left="30.0" right="30.0" top="10.0" />
+                           </VBox.margin>
+                        </Slider>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </VBox>
+                  <HBox alignment="CENTER" prefHeight="128.0" prefWidth="308.0">
+                     <children>
+                        <ImageView fx:id="imgZZZ" fitHeight="38.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@/img/zzz.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="lbSiesta" styleClass="text" text="Siesta" textFill="#ffecd6">
+                           <HBox.margin>
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font name="Tahoma Bold" size="19.0" />
+                           </font>
+                        </Label>
+                        <CheckBox fx:id="chkSiesta" mnemonicParsing="false" prefHeight="21.0" prefWidth="18.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </CheckBox>
+                     </children>
+                  </HBox>
+               </children>
+               <HBox.margin>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
+               </HBox.margin>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</VBox>

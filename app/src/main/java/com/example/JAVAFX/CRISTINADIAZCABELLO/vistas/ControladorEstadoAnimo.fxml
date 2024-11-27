@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="451.0" prefWidth="600.0" style="-fx-background-color: #203c56;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.JAVAFX.CRISTINADIAZCABELLO.controladores.ControladorEstadoAnimo">
+   <children>
+      <HBox prefHeight="24.0" prefWidth="600.0" style="-fx-background-color: #0d2b45;">
+         <children>
+            <ImageView fx:id="imgSave" fitHeight="22.0" fitWidth="26.0" onMouseClicked="#save" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets right="15.0" />
+               </HBox.margin>
+               <image>
+                  <Image url="@/img/save.png" />
+               </image>
+            </ImageView>
+            <ComboBox fx:id="cmbMomentoDia" prefHeight="30.0" prefWidth="158.0" promptText="Momento Día" style="-fx-background-color: #ffecd6;">
+               <padding>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </padding></ComboBox>
+            <BorderPane prefHeight="26.0" prefWidth="447.0">
+               <right>
+                  <Label fx:id="txtDiaMes" style="-fx-border-color: #d08159; -fx-border-width: 2;" text="Día/Mes" textFill="#ffecd6" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                     <BorderPane.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </BorderPane.margin>
+                     <padding>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </padding>
+                  </Label>
+               </right>
+            </BorderPane>
+         </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </HBox>
+      <HBox prefHeight="110.0" prefWidth="560.0">
+         <children>
+            <ImageView fx:id="imgEmoji" fitHeight="116.0" fitWidth="116.0" onMouseClicked="#elegirEmoji" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@/img/emojiNeutral_1.png" />
+               </image>
+               <HBox.margin>
+                  <Insets left="50.0" />
+               </HBox.margin>
+            </ImageView>
+            <VBox alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="448.0">
+               <HBox.margin>
+                  <Insets left="50.0" />
+               </HBox.margin>
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="360.0">
+                     <children>
+                        <ImageView fitHeight="25.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                           <image>
+                              <Image url="@/img/dot.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="txtPaciencia" text="PACIENCIA" textFill="#ffecd6">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font name="Tahoma Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Spinner fx:id="spnPaciencia" prefHeight="26.0" prefWidth="50.0" style="-fx-background-color: #ffd4a3;">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="20.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </Spinner>
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="360.0">
+                     <children>
+                        <ImageView fitHeight="25.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@/img/dot.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </ImageView>
+                        <Label fx:id="txtFuerzaSentimiento" text="FUERZA SENTIMIENTO" textFill="#ffecd6">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font name="Tahoma Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Spinner fx:id="spnFuerzaSentimiento" prefHeight="26.0" prefWidth="50.0" style="-fx-background-color: #ffd4a3;">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="20.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </Spinner>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="360.0">
+                     <children>
+                        <ImageView fitHeight="25.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@/img/dot.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </ImageView>
+                        <Label fx:id="txtGradoProductividad" text="GRADO PRODUCTIVIDAD" textFill="#ffecd6">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font name="Tahoma Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Spinner fx:id="spnGradoProductividad" prefHeight="26.0" prefWidth="50.0" style="-fx-background-color: #ffd4a3;">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="20.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </Spinner>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+         <VBox.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox prefHeight="222.0" prefWidth="581.0">
+         <children>
+            <ImageView fx:id="imgDescripcionDia" fitHeight="222.0" fitWidth="227.0" onMouseClicked="#abrirControladorDia" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets left="40.0" right="10.0" />
+               </HBox.margin>
+               <image>
+                  <Image url="@/img/flowerPostIt.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgDescribeTuDia" fitHeight="221.0" fitWidth="278.0" onMouseClicked="#abrirBloc" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets left="80.0" />
+               </HBox.margin>
+               <image>
+                  <Image url="@/img/paperNote.png" />
+               </image>
+            </ImageView>
+         </children>
+      </HBox>
+   </children>
+</VBox>
