@@ -32,7 +32,6 @@ public class EstadoDeAnimoDAOclass implements EstadoDeAnimoDAO {
         return -1;
     }
 
-
     @Override
     public EstadoDeAnimo findById(int idEstado) {
         String query = "SELECT * FROM Estado_de_Animo WHERE id_estado = ?";
@@ -65,6 +64,7 @@ public class EstadoDeAnimoDAOclass implements EstadoDeAnimoDAO {
             stmt.executeUpdate();
             try (ResultSet keys = stmt.getGeneratedKeys()) {
                 if (keys.next()) {
+                    System.out.println("Generated ID: " + keys.getInt(1));
                     return keys.getInt(1);
                 }
             }

@@ -54,6 +54,7 @@ public class DiaEstadoAnimoCR {
                 "fecha=" + fecha +
                 ", momentoDia='" + momentoDia + '\'' +
                 ", descripcion='" + descripcion + '\'' +
+                ", id_estado=" + id_estado +
                 '}';
     }
 

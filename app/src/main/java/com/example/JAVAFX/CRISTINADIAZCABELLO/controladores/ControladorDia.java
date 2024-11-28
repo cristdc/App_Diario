@@ -60,9 +60,11 @@ public class ControladorDia implements Initializable {
         diaEstadoAnimoCRDAOclass = new DiaEstadoAnimoCRDAOclass(conexion);
         estadoDeAnimoDAOclass = new EstadoDeAnimoDAOclass(conexion);
     }
+
     private void configurarComboBoxTiempo() {
         cmbTiempo.getItems().addAll("Soleado", "Nublado", "Lluvia", "Granizo");
     }
+
     private void configurarSliderSueño() {
         sliderSueño.setMin(0);
         sliderSueño.setMax(10);
@@ -70,32 +72,40 @@ public class ControladorDia implements Initializable {
 
     @FXML
     private void save(MouseEvent event) {
-        /*int calidadSueño = (int) sliderSueño.getValue();
-        Boolean siesta = chkSiesta.isSelected();
-        String clima = cmbTiempo.getValue();
-        // String retos = controladorAñadirReto.getRetos();
-        try {
-            if (dia == null) {
-                dia = new Dia(java.sql.Date.valueOf(getFecha()), calidadSueño, clima, siesta, "");
-                estadoDeAnimoDAOclass.insert(estadoDeAnimo);
-            } else {
-                dia.setCalidadSueno((int) sliderSueño.getValue());
-                dia.setSiesta(chkSiesta.isSelected());
-                dia.setClima(cmbTiempo.getValue());
-                // dia.setRetos(controladorAñadirReto.getRetos());
-                diaDAOclass.update(dia);
+        if (diaEstadoAnimoCR == null || estadoDeAnimo == null) {
+            mostrarAlerta(Alert.AlertType.INFORMATION, "Por favor, rellena y guarda el resto de datos antes de rellenar está pantalla.");
+        } else {
+            try {
+                if (conexion == null) {
+                    conexion = ConexionSingleton.getConexion();
+                }
+
+                dia = diaDAOclass.findByFecha(fecha);
+                if (dia == null) {
+                    dia = new Dia(java.sql.Date.valueOf(fecha), 0, "", false, "");
+                    diaDAOclass.insert(dia);
+                } else {
+                    dia.setFecha(java.sql.Date.valueOf(fecha));
+                    dia.setCalidadSueno((int) sliderSueño.getValue());
+                    dia.setClima(cmbTiempo.getValue());
+                    dia.setRetos(controladorAñadirReto.getRetos());
+                    dia.setSiesta(chkSiesta.isSelected());
+                    diaDAOclass.update(dia);
+                }
+
+                mostrarAlerta(Alert.AlertType.INFORMATION, "Datos guardados correctamente.");
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                mostrarAlerta(Alert.AlertType.ERROR, "Error al guardar: " + e.getMessage());
             }
+        }
+    }
 
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setContentText("Se ha guardado correctamente, puedes cerrar sin pérdida de datos.");
-            alert.show();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Ha ocurrido un error al guardar los datos. ¿Estás seguro de que has rellenado todos los campos?");
-            alert.show();
-        }*/
+    private void mostrarAlerta(Alert.AlertType tipo, String mensaje) {
+        Alert alert = new Alert(tipo);
+        alert.setContentText(mensaje);
+        alert.show();
     }
 
     @FXML
@@ -110,6 +120,7 @@ public class ControladorDia implements Initializable {
         Stage stage = crearVentanaModal(root, "Controlador Retos");
         stage.show();
     }
+
     private Stage crearVentanaModal(Parent root, String titulo) {
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -123,7 +134,10 @@ public class ControladorDia implements Initializable {
         this.controladorEstadoAnimo = controlador;
     }
 
-    public Dia getDia() {return dia;}
+    public Dia getDia() {
+        return dia;
+    }
+
     public void setDia(Dia dia) {
         this.dia = dia;
         sliderSueño.setValue(dia.getCalidadSueno());
@@ -134,6 +148,7 @@ public class ControladorDia implements Initializable {
     public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
+
     public LocalDate getFecha() {
         return fecha;
     }

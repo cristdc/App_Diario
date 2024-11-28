@@ -31,4 +31,7 @@ public class ControladorAñadirReto implements Initializable {
 
     }
 
+    public String getRetos() {
+        return txtTexto.getText();
+    }
 }

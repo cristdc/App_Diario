@@ -29,7 +29,7 @@ import javafx.stage.Stage;
 public class ControladorEstadoAnimo implements Initializable {
 
     @FXML
-    private ImageView imgDescribeTuDia, imgDescripcionDia, imgEmoji, imgSave;
+    private ImageView imgDescribeTuDia, imgDescripcionDia, imgEmoji, imgSave, imgDelete;
     @FXML
     private Spinner<Integer> spnFuerzaSentimiento, spnGradoProductividad, spnPaciencia;
     @FXML
@@ -81,6 +81,26 @@ public class ControladorEstadoAnimo implements Initializable {
         spnPaciencia.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 10));
     }
 
+
+    @FXML
+    void delete(MouseEvent event) {
+        try {
+            if (conexion == null) {
+                conexion = ConexionSingleton.getConexion();
+            }
+
+            diaEstadoAnimoCRDAOclass.delete(fecha, cmbMomentoDia.getValue());
+            estadoDeAnimoDAOclass.delete(id_estado);
+            diaDAOclass.delete(fecha);
+
+            mostrarAlerta(Alert.AlertType.INFORMATION, "Todos los datos han sido eliminados correctamente.");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            mostrarAlerta(Alert.AlertType.ERROR, "Error al eliminar los datos: " + e.getMessage());
+        }
+    }
+
     @FXML
     private void save(MouseEvent event) {
         try {
@@ -96,6 +116,7 @@ public class ControladorEstadoAnimo implements Initializable {
                 dia.setFecha(java.sql.Date.valueOf(fecha));
                 diaDAOclass.update(dia);
             }
+            System.out.println("DarioDIA: " + dia);
 
             int fuerzaSentimiento = spnFuerzaSentimiento.getValue();
             int gradoProductividad = spnGradoProductividad.getValue();
@@ -106,7 +127,7 @@ public class ControladorEstadoAnimo implements Initializable {
 
             if (estadoDeAnimo == null) {
                 estadoDeAnimo = new EstadoDeAnimo(emoji, paciencia, fuerzaSentimiento, gradoProductividad);
-                id_estado = estadoDeAnimoDAOclass.insert(estadoDeAnimo);
+                estadoDeAnimo.setId_estado(estadoDeAnimoDAOclass.insert(estadoDeAnimo));
             } else {
                 estadoDeAnimo.setFuerzaSentimiento(fuerzaSentimiento);
                 estadoDeAnimo.setGradoProductividad(gradoProductividad);
@@ -115,18 +136,17 @@ public class ControladorEstadoAnimo implements Initializable {
                 estadoDeAnimoDAOclass.update(estadoDeAnimo);
             }
 
-            int idEstado = estadoDeAnimoDAOclass.findIdByAttributes(estadoDeAnimo);
+            // id_estado = estadoDeAnimoDAOclass.findIdByAttributes(estadoDeAnimo);
 
             diaEstadoAnimoCR = diaEstadoAnimoCRDAOclass.findByFechaAndMomento(fecha, momentoDia);
             if (diaEstadoAnimoCR == null) {
                 diaEstadoAnimoCR = new DiaEstadoAnimoCR(java.sql.Date.valueOf(fecha), momentoDia, descripcion);
-                diaEstadoAnimoCR.setIdEstado(idEstado);
+                diaEstadoAnimoCR.setIdEstado(estadoDeAnimo.getId_estado());
                 diaEstadoAnimoCRDAOclass.insert(diaEstadoAnimoCR);
             } else {
                 diaEstadoAnimoCR.setMomentoDia(momentoDia);
                 diaEstadoAnimoCR.setDescripcion(descripcion);
                 diaEstadoAnimoCR.setFecha(java.sql.Date.valueOf(fecha));
-                diaEstadoAnimoCR.setIdEstado(idEstado);
                 diaEstadoAnimoCRDAOclass.update(diaEstadoAnimoCR);
             }
 

@@ -23,6 +23,14 @@
                   <Image url="@/img/save.png" />
                </image>
             </ImageView>
+            <ImageView fx:id="imgDelete" fitHeight="22.0" fitWidth="21.0" onMouseClicked="#delete" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets right="15.0" />
+               </HBox.margin>
+               <image>
+                  <Image url="@/img/iconBin.png" />
+               </image>
+            </ImageView>
             <ComboBox fx:id="cmbMomentoDia" prefHeight="30.0" prefWidth="158.0" promptText="Momento Día" style="-fx-background-color: #ffecd6;">
                <padding>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />

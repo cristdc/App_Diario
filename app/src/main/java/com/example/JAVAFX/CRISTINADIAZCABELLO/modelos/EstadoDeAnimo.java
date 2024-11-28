@@ -26,39 +26,30 @@ public class EstadoDeAnimo {
     public String getEmoji() {
         return emoji;
     }
-
     public void setEmoji(String emoji) {
         this.emoji = emoji;
     }
-
     public int getId_estado() {
         return id_estado;
     }
-
     public void setId_estado(int id_estado) {
         this.id_estado = id_estado;
     }
-
     public int getPaciencia() {
         return paciencia;
     }
-
     public void setPaciencia(int paciencia) {
         this.paciencia = paciencia;
     }
-
     public int getFuerzaSentimiento() {
         return fuerzaSentimiento;
     }
-
     public void setFuerzaSentimiento(int fuerzaSentimiento) {
         this.fuerzaSentimiento = fuerzaSentimiento;
     }
-
     public int getGradoProductividad() {
         return gradoProductividad;
     }
-
     public void setGradoProductividad(int gradoProductividad) {
         this.gradoProductividad = gradoProductividad;
     }
@@ -70,6 +61,7 @@ public class EstadoDeAnimo {
                 ", paciencia=" + paciencia +
                 ", fuerzaSentimiento=" + fuerzaSentimiento +
                 ", gradoProductividad=" + gradoProductividad +
+                ", id_estado=" + id_estado +
                 '}';
     }
 }

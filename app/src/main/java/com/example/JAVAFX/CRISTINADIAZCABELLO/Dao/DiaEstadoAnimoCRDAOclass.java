@@ -38,6 +38,7 @@ public class DiaEstadoAnimoCRDAOclass implements DiaEstadoAnimoCRDAO {
     public void insert(DiaEstadoAnimoCR diaEstadoAnimoCR) throws SQLException {
         String sql = "INSERT INTO Dia_EstadoAnimo_CR (fecha, momento_dia, descripcion, id_estado) VALUES (?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            System.out.println("inserting with data \n fecha: " + diaEstadoAnimoCR.getFecha() + "\n momento: " + diaEstadoAnimoCR.getMomentoDia() + "\n descripcion: " + diaEstadoAnimoCR.getDescripcion() + "\n id_estado: " + diaEstadoAnimoCR.getIdEstado());
             stmt.setDate(1, diaEstadoAnimoCR.getFecha());
             stmt.setString(2, diaEstadoAnimoCR.getMomentoDia());
             stmt.setString(3, diaEstadoAnimoCR.getDescripcion());
@@ -49,11 +50,11 @@ public class DiaEstadoAnimoCRDAOclass implements DiaEstadoAnimoCRDAO {
 
     @Override
     public void update(DiaEstadoAnimoCR diaEstadoAnimoCR) {
-        String query = "UPDATE Dia_EstadoAnimo_CR SET momento_dia = ?, descripcion = ? WHERE fecha = ?";
+        String query = "UPDATE Dia_EstadoAnimo_CR SET descripcion = ? WHERE fecha = ? AND momento_dia = ?";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setString(1, diaEstadoAnimoCR.getMomentoDia());
-            ps.setString(2, diaEstadoAnimoCR.getDescripcion());
-            ps.setDate(3, (Date) diaEstadoAnimoCR.getFecha());
+            ps.setString(1, diaEstadoAnimoCR.getDescripcion());
+            ps.setDate(2, (Date) diaEstadoAnimoCR.getFecha());
+            ps.setString(3, diaEstadoAnimoCR.getMomentoDia());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
