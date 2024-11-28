@@ -3,11 +3,14 @@ package com.example.JAVAFX.CRISTINADIAZCABELLO.controladores;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Map;
+
+import com.example.JAVAFX.CRISTINADIAZCABELLO.modelos.EstadoDeAnimo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 
 public class ControladorElegirEmoji implements Initializable {
 
@@ -16,6 +19,11 @@ public class ControladorElegirEmoji implements Initializable {
 
     private ControladorEstadoAnimo controladorEstadoAnimo;
     private Map<Button, Emoji> botonEmojiMap;
+    private String image;
+
+    public String getImage() {
+        return image;
+    }
 
     private enum Emoji {
         HAPPY("/img/happy.png"),
@@ -26,8 +34,13 @@ public class ControladorElegirEmoji implements Initializable {
 
         private final String imagePath;
 
-        Emoji(String imagePath) {this.imagePath = imagePath;}
-        public String getImagePath() {return imagePath;}
+        Emoji(String imagePath) {
+            this.imagePath = imagePath;
+        }
+
+        public String getImagePath() {
+            return imagePath;
+        }
     }
 
     public void setControladorEnlace(ControladorEstadoAnimo controlador) {
@@ -54,6 +67,7 @@ public class ControladorElegirEmoji implements Initializable {
 
         Button botonSeleccionado = (Button) event.getSource();
         Emoji emojiSeleccionado = botonEmojiMap.get(botonSeleccionado);
+        image = emojiSeleccionado.getImagePath();
 
         if (emojiSeleccionado != null) {
             controladorEstadoAnimo.actualizarEmoji(emojiSeleccionado.getImagePath());

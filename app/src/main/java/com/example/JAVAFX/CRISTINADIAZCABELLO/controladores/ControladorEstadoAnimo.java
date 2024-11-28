@@ -20,6 +20,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
@@ -48,6 +49,7 @@ public class ControladorEstadoAnimo implements Initializable {
     private DiaDAOclass diaDAOclass;
     private DiaEstadoAnimoCRDAOclass diaEstadoAnimoCRDAOclass;
     private EstadoDeAnimoDAOclass estadoDeAnimoDAOclass;
+    private int id_estado;
     private LocalDate fecha;
     private Connection conexion;
 
@@ -100,11 +102,11 @@ public class ControladorEstadoAnimo implements Initializable {
             int paciencia = spnPaciencia.getValue();
             String momentoDia = cmbMomentoDia.getValue();
             String descripcion = cDiario != null ? cDiario.getTexto() : "";
-            String emoji = estadoDeAnimo != null ? estadoDeAnimo.getEmoji() : "/img/neutral.png";
+            String emoji = cElegirEmoji != null ? cElegirEmoji.getImage() : "/img/neutral.png";
 
             if (estadoDeAnimo == null) {
                 estadoDeAnimo = new EstadoDeAnimo(emoji, paciencia, fuerzaSentimiento, gradoProductividad);
-                estadoDeAnimoDAOclass.insert(estadoDeAnimo);
+                id_estado = estadoDeAnimoDAOclass.insert(estadoDeAnimo);
             } else {
                 estadoDeAnimo.setFuerzaSentimiento(fuerzaSentimiento);
                 estadoDeAnimo.setGradoProductividad(gradoProductividad);
@@ -141,7 +143,6 @@ public class ControladorEstadoAnimo implements Initializable {
         alert.setContentText(mensaje);
         alert.show();
     }
-
 
     @FXML
     private void elegirEmoji(MouseEvent event) throws IOException {
@@ -223,7 +224,7 @@ public class ControladorEstadoAnimo implements Initializable {
         imgEmoji.setImage(new ImageView(estadoDeAnimo.getEmoji()).getImage());
     }
     public void actualizarEmoji(String emoji) {
-        imgEmoji.setImage(new ImageView(emoji).getImage());
+        imgEmoji.setImage(new Image(emoji));
     }
 
     public String getCmbMomentoDia() {

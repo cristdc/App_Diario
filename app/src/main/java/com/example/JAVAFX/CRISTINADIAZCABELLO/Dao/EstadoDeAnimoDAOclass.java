@@ -55,19 +55,23 @@ public class EstadoDeAnimoDAOclass implements EstadoDeAnimoDAO {
     }
 
     @Override
-    public void insert(EstadoDeAnimo estadoDeAnimo) {
-        String query = "INSERT INTO Estado_de_Animo (emoji, paciencia, fuerza_sentimiento, grado_productividad) VALUES (?, ?, ?, ?)";
-        try (PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setString(1, estadoDeAnimo.getEmoji());
-            ps.setInt(2, estadoDeAnimo.getPaciencia());
-            ps.setInt(3, estadoDeAnimo.getFuerzaSentimiento());
-            ps.setInt(4, estadoDeAnimo.getGradoProductividad());
-            ps.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public int insert(EstadoDeAnimo estado) throws SQLException {
+        String sql = "INSERT INTO Estado_de_Animo (emoji, paciencia, fuerza_sentimiento, grado_productividad) VALUES (?, ?, ?, ?)";
+        try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            stmt.setString(1, estado.getEmoji());
+            stmt.setInt(2, estado.getPaciencia());
+            stmt.setInt(3, estado.getFuerzaSentimiento());
+            stmt.setInt(4, estado.getGradoProductividad());
+            stmt.executeUpdate();
+            try (ResultSet keys = stmt.getGeneratedKeys()) {
+                if (keys.next()) {
+                    return keys.getInt(1);
+                }
+            }
         }
+        throw new SQLException("No se pudo generar el ID para EstadoDeAnimo.");
     }
+
 
     @Override
     public void update(EstadoDeAnimo estadoDeAnimo) {

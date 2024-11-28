@@ -35,17 +35,17 @@ public class DiaEstadoAnimoCRDAOclass implements DiaEstadoAnimoCRDAO {
     }
 
     @Override
-    public void insert(DiaEstadoAnimoCR diaEstadoAnimoCR) {
-        String query = "INSERT INTO Dia_EstadoAnimo_CR (fecha, momento_dia, descripcion) VALUES (?, ?, ?)";
-        try (PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setDate(1, (Date) diaEstadoAnimoCR.getFecha());
-            ps.setString(2, diaEstadoAnimoCR.getMomentoDia());
-            ps.setString(3, diaEstadoAnimoCR.getDescripcion());
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public void insert(DiaEstadoAnimoCR diaEstadoAnimoCR) throws SQLException {
+        String sql = "INSERT INTO Dia_EstadoAnimo_CR (fecha, momento_dia, descripcion, id_estado) VALUES (?, ?, ?, ?)";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setDate(1, diaEstadoAnimoCR.getFecha());
+            stmt.setString(2, diaEstadoAnimoCR.getMomentoDia());
+            stmt.setString(3, diaEstadoAnimoCR.getDescripcion());
+            stmt.setInt(4, diaEstadoAnimoCR.getIdEstado());
+            stmt.executeUpdate();
         }
     }
+
 
     @Override
     public void update(DiaEstadoAnimoCR diaEstadoAnimoCR) {

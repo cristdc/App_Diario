@@ -4,11 +4,12 @@
  */
 package com.example.JAVAFX.CRISTINADIAZCABELLO.modelos;
 
+import java.sql.Date;
+
 /**
  *
  * @author crist
  */
-import java.util.Date;
 
 public class DiaEstadoAnimoCR {
 
@@ -58,5 +59,8 @@ public class DiaEstadoAnimoCR {
 
     public void setIdEstado(int idEstado) {
         this.id_estado=idEstado;
+    }
+    public int getIdEstado() {
+        return id_estado;
     }
 }
