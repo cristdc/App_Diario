@@ -183,7 +183,6 @@ public class ControladorPrincipal implements Initializable {
                 if (rs.next()) {
                     return new DiaEstadoAnimoCR(
                             rs.getDate("fecha"),
-                            rs.getInt("id_estado"),
                             rs.getString("momento_dia"),
                             rs.getString("descripcion")
                     );
@@ -206,7 +205,6 @@ public class ControladorPrincipal implements Initializable {
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     return new EstadoDeAnimo(
-                            rs.getInt("id_estado"),
                             rs.getString("emoji"),
                             rs.getInt("paciencia"),
                             rs.getInt("fuerza_sentimiento"),

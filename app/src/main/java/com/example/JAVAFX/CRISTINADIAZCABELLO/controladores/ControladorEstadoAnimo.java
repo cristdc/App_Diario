@@ -82,8 +82,17 @@ public class ControladorEstadoAnimo implements Initializable {
     @FXML
     private void save(MouseEvent event) {
         try {
-            if (estadoDeAnimo == null) {
-                estadoDeAnimo = new EstadoDeAnimo(-1, "", 1, 1, 1); // Valores predeterminados o inicialización básica
+            if (conexion == null) {
+                conexion = ConexionSingleton.getConexion();
+            }
+
+            dia = diaDAOclass.findByFecha(fecha);
+            if (dia == null) {
+                dia = new Dia(java.sql.Date.valueOf(fecha), 0, "", false, "");
+                diaDAOclass.insert(dia);
+            }else{
+                dia.setFecha(java.sql.Date.valueOf(fecha));
+                diaDAOclass.update(dia);
             }
 
             int fuerzaSentimiento = spnFuerzaSentimiento.getValue();
@@ -91,60 +100,10 @@ public class ControladorEstadoAnimo implements Initializable {
             int paciencia = spnPaciencia.getValue();
             String momentoDia = cmbMomentoDia.getValue();
             String descripcion = cDiario != null ? cDiario.getTexto() : "";
-            String emoji = estadoDeAnimo.getEmoji() != null ? estadoDeAnimo.getEmoji() : "";
-
-            if (descripcion.isEmpty()) {
-                throw new IllegalArgumentException("La descripción no puede estar vacía.");
-            }
-
-            estadoDeAnimo.setFuerzaSentimiento(fuerzaSentimiento);
-            estadoDeAnimo.setGradoProductividad(gradoProductividad);
-            estadoDeAnimo.setPaciencia(paciencia);
-            estadoDeAnimo.setEmoji(emoji);
-
-            if (estadoDeAnimo.getIdEstado() <= 0) {
-                estadoDeAnimoDAOclass.insert(estadoDeAnimo);
-            } else {
-                estadoDeAnimoDAOclass.update(estadoDeAnimo);
-            }
-
-            if (diaEstadoAnimoCR == null) {
-                diaEstadoAnimoCR = new DiaEstadoAnimoCR(java.sql.Date.valueOf(fecha), estadoDeAnimo.getIdEstado(), momentoDia, descripcion);
-                diaEstadoAnimoCRDAOclass.insert(diaEstadoAnimoCR);
-            } else {
-                diaEstadoAnimoCR.setIdEstado(estadoDeAnimo.getIdEstado());
-                diaEstadoAnimoCR.setMomentoDia(momentoDia);
-                diaEstadoAnimoCR.setFecha(java.sql.Date.valueOf(fecha));
-                diaEstadoAnimoCR.setDescripcion(descripcion);
-                diaEstadoAnimoCRDAOclass.update(diaEstadoAnimoCR);
-            }
-
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setContentText("Se ha guardado correctamente.");
-            alert.show();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Error al guardar: " + e.getMessage());
-            alert.show();
-        }
-    }
-
-    /*
-    @FXML
-    private void save(MouseEvent event) {
-        try {
-            int fuerzaSentimiento = spnFuerzaSentimiento.getValue();
-            int gradoProductividad = spnGradoProductividad.getValue();
-            int paciencia = spnPaciencia.getValue();
-            String momentoDia = cmbMomentoDia.getValue();
-            String emoji = estadoDeAnimo.getEmoji();
-            String descripcion = cDiario.getTexto();
+            String emoji = estadoDeAnimo != null ? estadoDeAnimo.getEmoji() : "/img/neutral.png";
 
             if (estadoDeAnimo == null) {
-                estadoDeAnimo = new EstadoDeAnimo(-1, emoji, paciencia, fuerzaSentimiento, gradoProductividad);
+                estadoDeAnimo = new EstadoDeAnimo(emoji, paciencia, fuerzaSentimiento, gradoProductividad);
                 estadoDeAnimoDAOclass.insert(estadoDeAnimo);
             } else {
                 estadoDeAnimo.setFuerzaSentimiento(fuerzaSentimiento);
@@ -154,28 +113,31 @@ public class ControladorEstadoAnimo implements Initializable {
                 estadoDeAnimoDAOclass.update(estadoDeAnimo);
             }
 
+            diaEstadoAnimoCR = diaEstadoAnimoCRDAOclass.findByFechaAndMomento(fecha, momentoDia);
             if (diaEstadoAnimoCR == null) {
-                diaEstadoAnimoCR = new DiaEstadoAnimoCR(java.sql.Date.valueOf(getFecha()), -1, momentoDia, descripcion);
+                diaEstadoAnimoCR = new DiaEstadoAnimoCR(java.sql.Date.valueOf(fecha), momentoDia, descripcion);
                 diaEstadoAnimoCRDAOclass.insert(diaEstadoAnimoCR);
             } else {
-                diaEstadoAnimoCR.setIdEstado(estadoDeAnimo.getIdEstado());
                 diaEstadoAnimoCR.setMomentoDia(momentoDia);
-                diaEstadoAnimoCR.setFecha(java.sql.Date.valueOf(getFecha()));
                 diaEstadoAnimoCR.setDescripcion(descripcion);
+                diaEstadoAnimoCR.setFecha(java.sql.Date.valueOf(fecha));
                 diaEstadoAnimoCRDAOclass.update(diaEstadoAnimoCR);
             }
 
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setContentText("Se ha guardado correctamente, puedes cerrar sin pérdida de datos.");
-            alert.show();
+            mostrarAlerta(Alert.AlertType.INFORMATION, "Datos guardados correctamente.");
 
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Ha ocurrido un error al guardar los datos. ¿Estás seguro de que has rellenado todos los campos?");
-            alert.show();
+            mostrarAlerta(Alert.AlertType.ERROR, "Error al guardar: " + e.getMessage());
         }
-    }*/
+    }
+
+    private void mostrarAlerta(Alert.AlertType tipo, String mensaje) {
+        Alert alert = new Alert(tipo);
+        alert.setContentText(mensaje);
+        alert.show();
+    }
+
 
     @FXML
     private void elegirEmoji(MouseEvent event) throws IOException {
@@ -190,7 +152,7 @@ public class ControladorEstadoAnimo implements Initializable {
             dia = new Dia(java.sql.Date.valueOf(String.valueOf(cPrincipal.selectedDay)), 0, "", false, "");
         }
         if (diaEstadoAnimoCR == null) {
-            diaEstadoAnimoCR = new DiaEstadoAnimoCR(java.sql.Date.valueOf(getFecha()), -1, "", "");
+            diaEstadoAnimoCR = new DiaEstadoAnimoCR(java.sql.Date.valueOf(getFecha()), "", "");
         }
 
         abrirVentana("/com/example/JAVAFX/CRISTINADIAZCABELLO/vistas/ControladorDiario.fxml", "Controlador Diario", (loader) -> {
@@ -203,10 +165,10 @@ public class ControladorEstadoAnimo implements Initializable {
     @FXML
     private void abrirControladorDia(MouseEvent event) throws IOException {
         if (diaEstadoAnimoCR == null) {
-            diaEstadoAnimoCR = new DiaEstadoAnimoCR(java.sql.Date.valueOf(getFecha()), -1, "", "");
+            diaEstadoAnimoCR = new DiaEstadoAnimoCR(java.sql.Date.valueOf(getFecha()), "", "");
         }
         if (estadoDeAnimo == null) {
-            estadoDeAnimo = new EstadoDeAnimo(-1, "", 1, 1, 1);
+            estadoDeAnimo = new EstadoDeAnimo("", 1, 1, 1);
         }
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/JAVAFX/CRISTINADIAZCABELLO/vistas/ControladorDia.fxml"));
@@ -225,7 +187,6 @@ public class ControladorEstadoAnimo implements Initializable {
         stage.setTitle("Controlador Dia");
         stage.show();
     }
-
     private void abrirVentana(String fxmlPath, String titulo, VentanaConfiguracion configuracion) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
         Parent root = loader.load();

@@ -12,13 +12,11 @@ import java.util.Date;
 
 public class DiaEstadoAnimoCR {
     private Date fecha;
-    private int idEstado;
     private String momentoDia;
     private String descripcion;
 
-    public DiaEstadoAnimoCR(Date fecha, int idEstado, String momentoDia, String descripcion) {
+    public DiaEstadoAnimoCR(Date fecha, String momentoDia, String descripcion) {
         this.fecha = fecha;
-        this.idEstado = idEstado;
         this.momentoDia = momentoDia;
         this.descripcion = descripcion;
     }
@@ -29,14 +27,6 @@ public class DiaEstadoAnimoCR {
 
     public void setFecha(Date fecha) {
         this.fecha = fecha;
-    }
-
-    public int getIdEstado() {
-        return idEstado;
-    }
-
-    public void setIdEstado(int idEstado) {
-        this.idEstado = idEstado;
     }
 
     public String getMomentoDia() {
@@ -59,7 +49,6 @@ public class DiaEstadoAnimoCR {
     public String toString() {
         return "DiaEstadoAnimoCR{" +
                 "fecha=" + fecha +
-                ", idEstado=" + idEstado +
                 ", momentoDia='" + momentoDia + '\'' +
                 ", descripcion='" + descripcion + '\'' +
                 '}';

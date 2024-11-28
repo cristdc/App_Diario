@@ -23,7 +23,6 @@ public class DiaEstadoAnimoCRDAOclass implements DiaEstadoAnimoCRDAO {
                 if (rs.next()) {
                     return new DiaEstadoAnimoCR(
                             rs.getDate("fecha"),
-                            rs.getInt("id_estado"),
                             rs.getString("momento_dia"),
                             rs.getString("descripcion")
                     );
@@ -37,12 +36,11 @@ public class DiaEstadoAnimoCRDAOclass implements DiaEstadoAnimoCRDAO {
 
     @Override
     public void insert(DiaEstadoAnimoCR diaEstadoAnimoCR) {
-        String query = "INSERT INTO Dia_EstadoAnimo_CR (fecha, id_estado, momento_dia, descripcion) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO Dia_EstadoAnimo_CR (fecha, momento_dia, descripcion) VALUES (?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setDate(1, (Date) diaEstadoAnimoCR.getFecha());
-            ps.setInt(2, diaEstadoAnimoCR.getIdEstado());
-            ps.setString(3, diaEstadoAnimoCR.getMomentoDia());
-            ps.setString(4, diaEstadoAnimoCR.getDescripcion());
+            ps.setString(2, diaEstadoAnimoCR.getMomentoDia());
+            ps.setString(3, diaEstadoAnimoCR.getDescripcion());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -51,12 +49,11 @@ public class DiaEstadoAnimoCRDAOclass implements DiaEstadoAnimoCRDAO {
 
     @Override
     public void update(DiaEstadoAnimoCR diaEstadoAnimoCR) {
-        String query = "UPDATE Dia_EstadoAnimo_CR SET id_estado = ?, momento_dia = ?, descripcion = ? WHERE fecha = ?";
+        String query = "UPDATE Dia_EstadoAnimo_CR SET momento_dia = ?, descripcion = ? WHERE fecha = ?";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setInt(1, diaEstadoAnimoCR.getIdEstado());
-            ps.setString(2, diaEstadoAnimoCR.getMomentoDia());
-            ps.setString(3, diaEstadoAnimoCR.getDescripcion());
-            ps.setDate(4, (Date) diaEstadoAnimoCR.getFecha());
+            ps.setString(1, diaEstadoAnimoCR.getMomentoDia());
+            ps.setString(2, diaEstadoAnimoCR.getDescripcion());
+            ps.setDate(3, (Date) diaEstadoAnimoCR.getFecha());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

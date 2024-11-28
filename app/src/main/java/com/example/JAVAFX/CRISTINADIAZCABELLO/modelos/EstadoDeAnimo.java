@@ -9,26 +9,16 @@ package com.example.JAVAFX.CRISTINADIAZCABELLO.modelos;
  * @author crist
  */
 public class EstadoDeAnimo {
-    private int idEstado = 0;
     private String emoji;
     private int paciencia;
     private int fuerzaSentimiento;
     private int gradoProductividad;
 
-    public EstadoDeAnimo(int idEstado, String emoji, int paciencia, int fuerzaSentimiento, int gradoProductividad) {
-        this.idEstado = idEstado;
+    public EstadoDeAnimo(String emoji, int paciencia, int fuerzaSentimiento, int gradoProductividad) {
         this.emoji = emoji;
         this.paciencia = paciencia;
         this.fuerzaSentimiento = fuerzaSentimiento;
         this.gradoProductividad = gradoProductividad;
-    }
-
-    public int getIdEstado() {
-        return idEstado;
-    }
-
-    public void setIdEstado(int idEstado) {
-        this.idEstado = idEstado;
     }
 
     public String getEmoji() {
@@ -66,7 +56,6 @@ public class EstadoDeAnimo {
     @Override
     public String toString() {
         return "EstadoDeAnimo{" +
-                "idEstado=" + idEstado +
                 ", emoji='" + emoji + '\'' +
                 ", paciencia=" + paciencia +
                 ", fuerzaSentimiento=" + fuerzaSentimiento +

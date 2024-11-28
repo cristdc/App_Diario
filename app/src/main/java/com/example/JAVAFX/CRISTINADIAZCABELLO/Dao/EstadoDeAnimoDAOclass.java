@@ -2,10 +2,8 @@ package com.example.JAVAFX.CRISTINADIAZCABELLO.Dao;
 
 import com.example.JAVAFX.CRISTINADIAZCABELLO.modelos.EstadoDeAnimo;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+
 
 public class EstadoDeAnimoDAOclass implements EstadoDeAnimoDAO {
 
@@ -23,7 +21,6 @@ public class EstadoDeAnimoDAOclass implements EstadoDeAnimoDAO {
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     return new EstadoDeAnimo(
-                            rs.getInt("id_estado"),
                             rs.getString("emoji"),
                             rs.getInt("paciencia"),
                             rs.getInt("fuerza_sentimiento"),
@@ -60,7 +57,6 @@ public class EstadoDeAnimoDAOclass implements EstadoDeAnimoDAO {
             ps.setInt(2, estadoDeAnimo.getPaciencia());
             ps.setInt(3, estadoDeAnimo.getFuerzaSentimiento());
             ps.setInt(4, estadoDeAnimo.getGradoProductividad());
-            ps.setInt(5, estadoDeAnimo.getIdEstado());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

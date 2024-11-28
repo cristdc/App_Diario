@@ -30,4 +30,7 @@ public class ControladorDiario implements Initializable {
         return txtDiario.getText();
     }
 
+    public void setTexto(String descripcion) {
+        txtDiario.setText(descripcion);
+    }
 }
