@@ -2,61 +2,25 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="414.0" style="-fx-background-color: #203c56;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.JAVAFX.CRISTINADIAZCABELLO.controladores.ControladorAñadirReto">
    <children>
-      <HBox prefHeight="30.0" prefWidth="414.0" style="-fx-background-color: #0d2b45;">
-         <children>
-            <ImageView fx:id="imgSave" fitHeight="25.0" fitWidth="28.0" onMouseClicked="#save" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@/img/save.png" />
-               </image>
-               <HBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="20.0" top="10.0" />
-               </HBox.margin>
-            </ImageView>
-            <ImageView fx:id="imgAdd" fitHeight="24.0" fitWidth="28.0" onMouseClicked="#add" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@/img/add.png" />
-               </image>
-               <HBox.margin>
-                  <Insets bottom="10.0" right="10.0" top="10.0" />
-               </HBox.margin>
-            </ImageView>
-         </children>
-      </HBox>
+      <HBox prefHeight="30.0" prefWidth="414.0" style="-fx-background-color: #0d2b45;" />
       <ScrollPane fx:id="scrollPane" prefHeight="347.0" prefWidth="414.0" style="-fx-background-color: #203c56;">
          <content>
-            <VBox alignment="TOP_CENTER">
+            <VBox alignment="TOP_CENTER" prefHeight="343.0" prefWidth="410.0">
                <children>
-                  <TextField fx:id="txtReto">
+                  <TextArea fx:id="txtTexto" prefHeight="330.0" prefWidth="410.0" promptText="Escribe tus retos!">
                      <VBox.margin>
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                      </VBox.margin>
-                     <font>
-                        <Font name="Tahoma Bold" size="18.0" />
-                     </font>
-                  </TextField>
+                  </TextArea>
                </children>
             </VBox>
          </content></ScrollPane>
-      <HBox alignment="BOTTOM_RIGHT" prefHeight="43.0" prefWidth="414.0">
-         <children>
-            <ImageView fx:id="imgDelete" fitHeight="29.0" fitWidth="32.0" onMouseClicked="#delete" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@/img/iconBin.png" />
-               </image>
-               <HBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </HBox.margin>
-            </ImageView>
-         </children>
-      </HBox>
+      <HBox alignment="BOTTOM_RIGHT" prefHeight="28.0" prefWidth="414.0" />
    </children>
 </VBox>
