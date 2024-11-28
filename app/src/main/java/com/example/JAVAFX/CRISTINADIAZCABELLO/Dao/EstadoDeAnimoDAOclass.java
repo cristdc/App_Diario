@@ -13,6 +13,26 @@ public class EstadoDeAnimoDAOclass implements EstadoDeAnimoDAO {
         this.connection = connection;
     }
 
+
+    public int findIdByAttributes(EstadoDeAnimo estadoDeAnimo) {
+        String query = "SELECT id_estado FROM Estado_de_Animo WHERE emoji = ? AND paciencia = ? AND fuerza_sentimiento = ? AND grado_productividad = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, estadoDeAnimo.getEmoji());
+            ps.setInt(2, estadoDeAnimo.getPaciencia());
+            ps.setInt(3, estadoDeAnimo.getFuerzaSentimiento());
+            ps.setInt(4, estadoDeAnimo.getGradoProductividad());
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("id_estado");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+
     @Override
     public EstadoDeAnimo findById(int idEstado) {
         String query = "SELECT * FROM Estado_de_Animo WHERE id_estado = ?";
@@ -57,6 +77,7 @@ public class EstadoDeAnimoDAOclass implements EstadoDeAnimoDAO {
             ps.setInt(2, estadoDeAnimo.getPaciencia());
             ps.setInt(3, estadoDeAnimo.getFuerzaSentimiento());
             ps.setInt(4, estadoDeAnimo.getGradoProductividad());
+            ps.setInt(5, estadoDeAnimo.getId_estado());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

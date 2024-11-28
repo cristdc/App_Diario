@@ -113,14 +113,18 @@ public class ControladorEstadoAnimo implements Initializable {
                 estadoDeAnimoDAOclass.update(estadoDeAnimo);
             }
 
+            int idEstado = estadoDeAnimoDAOclass.findIdByAttributes(estadoDeAnimo);
+
             diaEstadoAnimoCR = diaEstadoAnimoCRDAOclass.findByFechaAndMomento(fecha, momentoDia);
             if (diaEstadoAnimoCR == null) {
                 diaEstadoAnimoCR = new DiaEstadoAnimoCR(java.sql.Date.valueOf(fecha), momentoDia, descripcion);
+                diaEstadoAnimoCR.setIdEstado(idEstado);
                 diaEstadoAnimoCRDAOclass.insert(diaEstadoAnimoCR);
             } else {
                 diaEstadoAnimoCR.setMomentoDia(momentoDia);
                 diaEstadoAnimoCR.setDescripcion(descripcion);
                 diaEstadoAnimoCR.setFecha(java.sql.Date.valueOf(fecha));
+                diaEstadoAnimoCR.setIdEstado(idEstado);
                 diaEstadoAnimoCRDAOclass.update(diaEstadoAnimoCR);
             }
 

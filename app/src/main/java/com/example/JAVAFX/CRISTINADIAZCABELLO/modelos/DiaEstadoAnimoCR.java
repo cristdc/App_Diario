@@ -11,6 +11,8 @@ package com.example.JAVAFX.CRISTINADIAZCABELLO.modelos;
 import java.util.Date;
 
 public class DiaEstadoAnimoCR {
+
+    private int id_estado;
     private Date fecha;
     private String momentoDia;
     private String descripcion;
@@ -52,5 +54,9 @@ public class DiaEstadoAnimoCR {
                 ", momentoDia='" + momentoDia + '\'' +
                 ", descripcion='" + descripcion + '\'' +
                 '}';
+    }
+
+    public void setIdEstado(int idEstado) {
+        this.id_estado=idEstado;
     }
 }
