@@ -56,6 +56,7 @@ public class ControladorEstadoAnimo implements Initializable {
     public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
+
     public LocalDate getFecha() {
         return fecha;
     }
@@ -112,7 +113,7 @@ public class ControladorEstadoAnimo implements Initializable {
             if (dia == null) {
                 dia = new Dia(java.sql.Date.valueOf(fecha), 0, "", false, "");
                 diaDAOclass.insert(dia);
-            }else{
+            } else {
                 dia.setFecha(java.sql.Date.valueOf(fecha));
                 diaDAOclass.update(dia);
             }
@@ -171,6 +172,7 @@ public class ControladorEstadoAnimo implements Initializable {
             cElegirEmoji.setControladorEnlace(this);
         });
     }
+
     @FXML
     private void abrirBloc(MouseEvent event) throws IOException {
         if (dia == null) {
@@ -187,31 +189,33 @@ public class ControladorEstadoAnimo implements Initializable {
         });
 
     }
+
     @FXML
     private void abrirControladorDia(MouseEvent event) throws IOException {
-        if (diaEstadoAnimoCR == null) {
+        if (diaEstadoAnimoCR == null || estadoDeAnimo == null) {
+            mostrarAlerta(Alert.AlertType.INFORMATION, "Debes rellenar y guardar el resto de datos antes de continuar.");
+
+        } else {
             diaEstadoAnimoCR = new DiaEstadoAnimoCR(java.sql.Date.valueOf(getFecha()), "", "");
-        }
-        if (estadoDeAnimo == null) {
             estadoDeAnimo = new EstadoDeAnimo("", 1, 1, 1);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/JAVAFX/CRISTINADIAZCABELLO/vistas/ControladorDia.fxml"));
+            Parent root = loader.load();
+
+            cDia = loader.getController();
+            cDia.setControladorEnlace(this);
+            cDia.setDia(dia);
+            cDia.setFecha(fecha);
+
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.setTitle("Controlador Dia");
+            stage.show();
         }
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/JAVAFX/CRISTINADIAZCABELLO/vistas/ControladorDia.fxml"));
-        Parent root = loader.load();
-
-        cDia = loader.getController();
-        cDia.setControladorEnlace(this);
-        cDia.setDia(dia);
-        cDia.setFecha(fecha);
-
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setResizable(false);
-        stage.setScene(scene);
-        stage.setTitle("Controlador Dia");
-        stage.show();
     }
+
     private void abrirVentana(String fxmlPath, String titulo, VentanaConfiguracion configuracion) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
         Parent root = loader.load();
@@ -229,13 +233,16 @@ public class ControladorEstadoAnimo implements Initializable {
     public void setControladorEnlace(ControladorPrincipal c) {
         this.cPrincipal = c;
     }
+
     public void setDia(Dia dia) {
         this.dia = dia;
         txtDiaMes.setText(dia.getFecha().toString());
     }
+
     public void setDiaEstadoAnimoCR(DiaEstadoAnimoCR diaEstadoAnimoCR) {
         this.diaEstadoAnimoCR = diaEstadoAnimoCR;
     }
+
     public void setEstadoDeAnimo(EstadoDeAnimo estadoDeAnimo) {
         this.estadoDeAnimo = estadoDeAnimo;
         spnFuerzaSentimiento.getValueFactory().setValue(estadoDeAnimo.getFuerzaSentimiento());
@@ -243,6 +250,7 @@ public class ControladorEstadoAnimo implements Initializable {
         spnPaciencia.getValueFactory().setValue(estadoDeAnimo.getPaciencia());
         imgEmoji.setImage(new ImageView(estadoDeAnimo.getEmoji()).getImage());
     }
+
     public void actualizarEmoji(String emoji) {
         imgEmoji.setImage(new Image(emoji));
     }

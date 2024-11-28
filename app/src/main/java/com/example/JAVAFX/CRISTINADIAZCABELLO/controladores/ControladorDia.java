@@ -72,34 +72,35 @@ public class ControladorDia implements Initializable {
 
     @FXML
     private void save(MouseEvent event) {
-        if (diaEstadoAnimoCR == null || estadoDeAnimo == null) {
-            mostrarAlerta(Alert.AlertType.INFORMATION, "Por favor, rellena y guarda el resto de datos antes de rellenar está pantalla.");
-        } else {
-            try {
-                if (conexion == null) {
-                    conexion = ConexionSingleton.getConexion();
-                }
 
-                dia = diaDAOclass.findByFecha(fecha);
-                if (dia == null) {
-                    dia = new Dia(java.sql.Date.valueOf(fecha), 0, "", false, "");
-                    diaDAOclass.insert(dia);
-                } else {
-                    dia.setFecha(java.sql.Date.valueOf(fecha));
-                    dia.setCalidadSueno((int) sliderSueño.getValue());
-                    dia.setClima(cmbTiempo.getValue());
-                    dia.setRetos(controladorAñadirReto.getRetos());
-                    dia.setSiesta(chkSiesta.isSelected());
-                    diaDAOclass.update(dia);
-                }
-
-                mostrarAlerta(Alert.AlertType.INFORMATION, "Datos guardados correctamente.");
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                mostrarAlerta(Alert.AlertType.ERROR, "Error al guardar: " + e.getMessage());
+        try {
+            if (conexion == null) {
+                conexion = ConexionSingleton.getConexion();
             }
+
+            dia = diaDAOclass.findByFecha(fecha);
+            if (dia == null) {
+                dia = new Dia(java.sql.Date.valueOf(fecha), 0, "", false, "");
+                diaDAOclass.insert(dia);
+            } else {
+                dia.setRetos("");
+                if(controladorAñadirReto != null) {
+                    dia.setRetos(controladorAñadirReto.getRetos());
+                }
+                dia.setFecha(java.sql.Date.valueOf(fecha));
+                dia.setCalidadSueno((int) sliderSueño.getValue());
+                dia.setClima(cmbTiempo.getValue());
+                dia.setSiesta(chkSiesta.isSelected());
+                diaDAOclass.update(dia);
+            }
+
+            mostrarAlerta(Alert.AlertType.INFORMATION, "Datos guardados correctamente.");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            mostrarAlerta(Alert.AlertType.ERROR, "Error al guardar: " + e.getMessage());
         }
+
     }
 
     private void mostrarAlerta(Alert.AlertType tipo, String mensaje) {
