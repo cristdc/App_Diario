@@ -28,7 +28,12 @@ public class ControladorAñadirReto implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        txtTexto.setTextFormatter(new javafx.scene.control.TextFormatter<String>(change -> {
+            if (change.getControlNewText().length() > 500) {
+                return null;
+            }
+            return change;
+        }));
     }
 
     public String getRetos() {

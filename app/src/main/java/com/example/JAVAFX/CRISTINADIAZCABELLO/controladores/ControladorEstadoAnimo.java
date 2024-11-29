@@ -70,12 +70,10 @@ public class ControladorEstadoAnimo implements Initializable {
         diaEstadoAnimoCRDAOclass = new DiaEstadoAnimoCRDAOclass(conexion);
         estadoDeAnimoDAOclass = new EstadoDeAnimoDAOclass(conexion);
     }
-
     private void inicializarCombobox() {
         cmbMomentoDia.getItems().addAll("Mañana", "Tarde", "Noche");
         cmbMomentoDia.getSelectionModel().select(0);
     }
-
     private void inicializarSpinners() {
         spnFuerzaSentimiento.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 10));
         spnGradoProductividad.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 10));
@@ -117,7 +115,8 @@ public class ControladorEstadoAnimo implements Initializable {
                 dia.setFecha(java.sql.Date.valueOf(fecha));
                 diaDAOclass.update(dia);
             }
-            System.out.println("DarioDIA: " + dia);
+            System.out.println("DIA: " + dia.toString());
+
 
             int fuerzaSentimiento = spnFuerzaSentimiento.getValue();
             int gradoProductividad = spnGradoProductividad.getValue();
@@ -126,30 +125,39 @@ public class ControladorEstadoAnimo implements Initializable {
             String descripcion = cDiario != null ? cDiario.getTexto() : "";
             String emoji = cElegirEmoji != null ? cElegirEmoji.getImage() : "/img/neutral.png";
 
+            estadoDeAnimo = estadoDeAnimoDAOclass.getEstadoDeAnimo(fecha, momentoDia);
             if (estadoDeAnimo == null) {
+                System.out.println("entro a insertaaaarrrrr");
                 estadoDeAnimo = new EstadoDeAnimo(emoji, paciencia, fuerzaSentimiento, gradoProductividad);
-                estadoDeAnimo.setId_estado(estadoDeAnimoDAOclass.insert(estadoDeAnimo));
+                int id = estadoDeAnimoDAOclass.insert(estadoDeAnimo);
+                estadoDeAnimo.setId_estado(id);
+                id_estado = estadoDeAnimo.getId_estado();
             } else {
+                System.out.println("entro a updateeeaaarrrrr");
                 estadoDeAnimo.setFuerzaSentimiento(fuerzaSentimiento);
                 estadoDeAnimo.setGradoProductividad(gradoProductividad);
                 estadoDeAnimo.setPaciencia(paciencia);
                 estadoDeAnimo.setEmoji(emoji);
                 estadoDeAnimoDAOclass.update(estadoDeAnimo);
             }
+            System.out.println("ESTADO DE ANIMO: " + estadoDeAnimo.toString());
 
-            // id_estado = estadoDeAnimoDAOclass.findIdByAttributes(estadoDeAnimo);
 
             diaEstadoAnimoCR = diaEstadoAnimoCRDAOclass.findByFechaAndMomento(fecha, momentoDia);
             if (diaEstadoAnimoCR == null) {
                 diaEstadoAnimoCR = new DiaEstadoAnimoCR(java.sql.Date.valueOf(fecha), momentoDia, descripcion);
+                System.out.println("id_estado: " + estadoDeAnimo.getId_estado());
                 diaEstadoAnimoCR.setIdEstado(estadoDeAnimo.getId_estado());
+                System.out.println("id_estado: " + diaEstadoAnimoCR.getIdEstado());
                 diaEstadoAnimoCRDAOclass.insert(diaEstadoAnimoCR);
+                System.out.println("id_estado: " + diaEstadoAnimoCR.getIdEstado());
             } else {
                 diaEstadoAnimoCR.setMomentoDia(momentoDia);
                 diaEstadoAnimoCR.setDescripcion(descripcion);
                 diaEstadoAnimoCR.setFecha(java.sql.Date.valueOf(fecha));
                 diaEstadoAnimoCRDAOclass.update(diaEstadoAnimoCR);
             }
+            System.out.println("DIA ESTADO ANIMO CR: " + diaEstadoAnimoCR.toString());
 
             mostrarAlerta(Alert.AlertType.INFORMATION, "Datos guardados correctamente.");
 
@@ -238,11 +246,9 @@ public class ControladorEstadoAnimo implements Initializable {
         this.dia = dia;
         txtDiaMes.setText(dia.getFecha().toString());
     }
-
     public void setDiaEstadoAnimoCR(DiaEstadoAnimoCR diaEstadoAnimoCR) {
         this.diaEstadoAnimoCR = diaEstadoAnimoCR;
     }
-
     public void setEstadoDeAnimo(EstadoDeAnimo estadoDeAnimo) {
         this.estadoDeAnimo = estadoDeAnimo;
         spnFuerzaSentimiento.getValueFactory().setValue(estadoDeAnimo.getFuerzaSentimiento());

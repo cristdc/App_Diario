@@ -3,6 +3,7 @@ package com.example.JAVAFX.CRISTINADIAZCABELLO.Dao;
 import com.example.JAVAFX.CRISTINADIAZCABELLO.modelos.EstadoDeAnimo;
 
 import java.sql.*;
+import java.time.LocalDate;
 
 
 public class EstadoDeAnimoDAOclass implements EstadoDeAnimoDAO {
@@ -72,9 +73,9 @@ public class EstadoDeAnimoDAOclass implements EstadoDeAnimoDAO {
         throw new SQLException("No se pudo generar el ID para EstadoDeAnimo.");
     }
 
-
     @Override
     public void update(EstadoDeAnimo estadoDeAnimo) {
+        System.out.println("Updating EstadoDeAnimo with ID: " + estadoDeAnimo.getId_estado());
         String query = "UPDATE Estado_de_Animo SET emoji = ?, paciencia = ?, fuerza_sentimiento = ?, grado_productividad = ? WHERE id_estado = ?";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, estadoDeAnimo.getEmoji());
@@ -82,11 +83,17 @@ public class EstadoDeAnimoDAOclass implements EstadoDeAnimoDAO {
             ps.setInt(3, estadoDeAnimo.getFuerzaSentimiento());
             ps.setInt(4, estadoDeAnimo.getGradoProductividad());
             ps.setInt(5, estadoDeAnimo.getId_estado());
-            ps.executeUpdate();
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected == 0) {
+                System.out.println("No se actualizó ningún registro. Verifica el ID: " + estadoDeAnimo.getId_estado());
+            } else {
+                System.out.println("Filas actualizadas: " + rowsAffected);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
 
     @Override
     public void delete(int id) {
@@ -97,6 +104,32 @@ public class EstadoDeAnimoDAOclass implements EstadoDeAnimoDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public EstadoDeAnimo getEstadoDeAnimo(LocalDate fecha, String momento) {
+        String query = "SELECT e.* FROM `Estado_de_Animo` as e INNER JOIN Dia_EstadoAnimo_CR as cr ON cr.id_estado = e.id_estado WHERE cr.momento_dia = ? AND cr.fecha = ?;";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, momento);
+            ps.setDate(2, Date.valueOf(fecha));
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                EstadoDeAnimo e = new EstadoDeAnimo(
+                        rs.getString("emoji"),
+                        rs.getInt("paciencia"),
+                        rs.getInt("fuerza_sentimiento"),
+                        rs.getInt("grado_productividad")
+                );
+
+                e.setId_estado(rs.getInt("id_estado"));
+
+                return e;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
 }
