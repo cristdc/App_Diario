@@ -244,4 +244,11 @@ public class ControladorPrincipal implements Initializable {
         actualizarCalendario();
         conexion = ConexionSingleton.getConexion();
     }
+
+    public void irAFecha(LocalDate fecha) {
+        currentYearMonth = YearMonth.of(fecha.getYear(), fecha.getMonthValue());
+        selectedDay = fecha.getDayOfMonth();
+        actualizarCalendario();
+    }
+
 }
