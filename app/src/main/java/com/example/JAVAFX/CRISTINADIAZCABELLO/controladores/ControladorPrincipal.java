@@ -43,9 +43,6 @@ public class ControladorPrincipal implements Initializable {
     private YearMonth currentYearMonth;
     public int selectedDay;
     private Connection conexion;
-    private DiaDAO diaDAO;
-    private DiaEstadoAnimoCRDAO diaEstadoAnimoCRDAO;
-    private EstadoDeAnimoDAO estadoDeAnimoDAO;
 
     @FXML
     void buscarUnaFecha(MouseEvent event) throws IOException {
