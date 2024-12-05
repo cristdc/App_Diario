@@ -32,7 +32,8 @@ public class ControladorBuscarFecha implements Initializable{
             Stage stage = (Stage) btnBuscarFecha.getScene().getWindow();
             stage.close();
         } else {
-            lbFecha.setText("Por favor selecciona una fecha.");
+            lbFecha.setText("Por favor \nselecciona \nuna fecha.");
+            lbFecha.setStyle("-fx-font-size: 12px;");
         }
     }
 

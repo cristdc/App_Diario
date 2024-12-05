@@ -5,6 +5,10 @@ import com.example.JAVAFX.CRISTINADIAZCABELLO.modelos.ConexionSingleton;
 import com.example.JAVAFX.CRISTINADIAZCABELLO.modelos.Dia;
 import com.example.JAVAFX.CRISTINADIAZCABELLO.modelos.DiaEstadoAnimoCR;
 import com.example.JAVAFX.CRISTINADIAZCABELLO.modelos.EstadoDeAnimo;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.ScaleTransition;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -13,11 +17,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.*;
 import java.net.URL;
@@ -56,6 +62,7 @@ public class ControladorPrincipal implements Initializable {
         stage.setResizable(false);
         stage.setScene(new Scene(root));
         stage.setTitle("Controlador Buscar Fecha");
+        stage.getIcons().add(new Image(getClass().getResource("/img/star.png").toString()));
         stage.show();
     }
 
@@ -135,6 +142,7 @@ public class ControladorPrincipal implements Initializable {
             stage.setResizable(false);
             stage.setScene(new Scene(root));
             stage.setTitle("Controlador Estado Ánimo");
+            stage.getIcons().add(new Image(getClass().getResource("/img/star.png").toString()));
             stage.show();
         } catch (IOException e) {
             System.out.println(e.getCause());
@@ -240,6 +248,8 @@ public class ControladorPrincipal implements Initializable {
         selectedDay = LocalDate.now().getDayOfMonth();
         actualizarCalendario();
         conexion = ConexionSingleton.getConexion();
+        animarFlechas();
+        configurarAnimacion(imgBuscar);
     }
 
     public void irAFecha(LocalDate fecha) {
@@ -247,5 +257,46 @@ public class ControladorPrincipal implements Initializable {
         selectedDay = fecha.getDayOfMonth();
         actualizarCalendario();
     }
+
+    private void animarFlechas() {
+        animarFlechaIzquierda();
+        animarFlechaDerecha();
+    }
+    private void animarFlechaIzquierda() {
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(imgLeftArrow.translateXProperty(), 0)),
+                new KeyFrame(Duration.seconds(2), new KeyValue(imgLeftArrow.translateXProperty(), -10)),
+                new KeyFrame(Duration.seconds(3), new KeyValue(imgLeftArrow.translateXProperty(), 0))
+        );
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.setAutoReverse(true);
+        timeline.play();
+    }
+    private void animarFlechaDerecha() {
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(imgRightArrow.translateXProperty(), 0)),
+                new KeyFrame(Duration.seconds(2), new KeyValue(imgRightArrow.translateXProperty(), 10)),
+                new KeyFrame(Duration.seconds(3), new KeyValue(imgRightArrow.translateXProperty(), 0))
+        );
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.setAutoReverse(true);
+        timeline.play();
+    }
+    private void configurarAnimacion(ImageView imageView) {
+        imageView.setOnMouseEntered(event -> {
+            ScaleTransition scaleUp = new ScaleTransition(Duration.millis(200), imageView);
+            scaleUp.setToX(1.2);
+            scaleUp.setToY(1.2);
+            scaleUp.play();
+        });
+
+        imageView.setOnMouseExited(event -> {
+            ScaleTransition scaleDown = new ScaleTransition(Duration.millis(200), imageView);
+            scaleDown.setToX(1.0);
+            scaleDown.setToY(1.0);
+            scaleDown.play();
+        });
+    }
+
 
 }

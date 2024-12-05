@@ -14,6 +14,7 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.ResourceBundle;
 
+import javafx.animation.ScaleTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -25,6 +26,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class ControladorEstadoAnimo implements Initializable {
 
@@ -65,6 +67,9 @@ public class ControladorEstadoAnimo implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         inicializarCombobox();
         inicializarSpinners();
+        configurarAnimacion(imgSave);
+        configurarAnimacion(imgDelete);
+
         conexion = ConexionSingleton.getConexion();
         diaDAOclass = new DiaDAOclass(conexion);
         diaEstadoAnimoCRDAOclass = new DiaEstadoAnimoCRDAOclass(conexion);
@@ -260,6 +265,7 @@ public class ControladorEstadoAnimo implements Initializable {
             stage.setResizable(false);
             stage.setScene(scene);
             stage.setTitle("Controlador Dia");
+            stage.getIcons().add(new Image(getClass().getResource("/img/star.png").toString()));
             stage.show();
         }
     }
@@ -274,6 +280,7 @@ public class ControladorEstadoAnimo implements Initializable {
         stage.setResizable(false);
         stage.setScene(scene);
         stage.setTitle(titulo);
+        stage.getIcons().add(new Image(getClass().getResource("/img/star.png").toString()));
         stage.show();
     }
 
@@ -300,6 +307,21 @@ public class ControladorEstadoAnimo implements Initializable {
     }
     public String getCmbMomentoDia() {
         return cmbMomentoDia.getValue();
+    }
+    private void configurarAnimacion(ImageView imageView) {
+        imageView.setOnMouseEntered(event -> {
+            ScaleTransition scaleUp = new ScaleTransition(Duration.millis(200), imageView);
+            scaleUp.setToX(1.2);
+            scaleUp.setToY(1.2);
+            scaleUp.play();
+        });
+
+        imageView.setOnMouseExited(event -> {
+            ScaleTransition scaleDown = new ScaleTransition(Duration.millis(200), imageView);
+            scaleDown.setToX(1.0);
+            scaleDown.setToY(1.0);
+            scaleDown.play();
+        });
     }
 
     @FunctionalInterface
