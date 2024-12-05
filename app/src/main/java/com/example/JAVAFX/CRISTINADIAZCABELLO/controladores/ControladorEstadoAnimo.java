@@ -333,7 +333,6 @@ public class ControladorEstadoAnimo implements Initializable {
             scaleDown.play();
         });
     }
-
     private void configurarAnimacion2(ImageView imageView) {
         imageView.setOnMouseEntered(event -> {
             ScaleTransition scaleUp = new ScaleTransition(Duration.millis(200), imageView);
