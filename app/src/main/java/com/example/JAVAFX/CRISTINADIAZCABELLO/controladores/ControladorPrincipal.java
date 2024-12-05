@@ -12,6 +12,7 @@ import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -61,7 +62,7 @@ public class ControladorPrincipal implements Initializable {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setResizable(false);
         stage.setScene(new Scene(root));
-        stage.setTitle("Controlador Buscar Fecha");
+        stage.setTitle("Buscador de fechas");
         stage.getIcons().add(new Image(getClass().getResource("/img/star.png").toString()));
         stage.show();
     }
@@ -88,7 +89,14 @@ public class ControladorPrincipal implements Initializable {
         String[] diasSemana = {"Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"};
         for (int i = 0; i < diasSemana.length; i++) {
             Label diaLabel = new Label(diasSemana[i]);
-            diaLabel.setStyle("-fx-text-fill: #ffecd6; -fx-font-weight: bold; -fx-font-family: Tahoma;");
+            diaLabel.setStyle(
+                    "-fx-text-fill: #f2d3ab; " +
+                    "-fx-font-weight: bold; " +
+                    "-fx-font-family: Tahoma; " +
+                    "-fx-font: 14px;"
+            );
+            diaLabel.setMinWidth(50);
+            diaLabel.setAlignment(Pos.CENTER);
             calendarGrid.add(diaLabel, i, 0);
         }
     }
@@ -96,6 +104,23 @@ public class ControladorPrincipal implements Initializable {
         if (fechaCalendario.getMonth().equals(currentYearMonth.getMonth())) {
             Button botonDia = new Button(String.valueOf(fechaCalendario.getDayOfMonth()));
             botonDia.setMinSize(50, 50);
+            String estiloNormal = "-fx-font: 14px \"Tahoma\"; "
+                    + "-fx-background-color: #113A5B; "
+                    + "-fx-font-weight: bold; "
+                    + "-fx-border-color: #f2d3ab; "
+                    + "-fx-border-width: 1px;"
+                    + "-fx-text-fill: #f2d3ab;";
+            botonDia.setStyle(estiloNormal);
+
+            String estiloHover = "-fx-font: 14px \"Tahoma\"; "
+                    + "-fx-background-color:  #0d2b45; "
+                    + "-fx-font-weight: bold; "
+                    + "-fx-border-color: #f2d3ab; "
+                    + "-fx-border-width: 1px;"
+                    + "-fx-text-fill: #f2d3ab;";
+            botonDia.setOnMouseEntered(event -> botonDia.setStyle(estiloHover));
+            botonDia.setOnMouseExited(event -> botonDia.setStyle(estiloNormal));
+
             botonDia.setOnAction(event -> manejarClickBotonDia(fechaCalendario));
             calendarGrid.add(botonDia, diaDeSemana, semana);
         }
@@ -141,7 +166,7 @@ public class ControladorPrincipal implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setResizable(false);
             stage.setScene(new Scene(root));
-            stage.setTitle("Controlador Estado Ánimo");
+            stage.setTitle("Estado Ánimo");
             stage.getIcons().add(new Image(getClass().getResource("/img/star.png").toString()));
             stage.show();
         } catch (IOException e) {

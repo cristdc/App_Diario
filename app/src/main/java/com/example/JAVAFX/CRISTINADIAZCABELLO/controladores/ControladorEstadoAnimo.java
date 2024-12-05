@@ -69,6 +69,9 @@ public class ControladorEstadoAnimo implements Initializable {
         inicializarSpinners();
         configurarAnimacion(imgSave);
         configurarAnimacion(imgDelete);
+        configurarAnimacion2(imgDescribeTuDia);
+        configurarAnimacion2(imgDescripcionDia);
+        configurarAnimacion2(imgEmoji);
 
         conexion = ConexionSingleton.getConexion();
         diaDAOclass = new DiaDAOclass(conexion);
@@ -229,7 +232,7 @@ public class ControladorEstadoAnimo implements Initializable {
 
     @FXML
     private void elegirEmoji(MouseEvent event) throws IOException {
-        abrirVentana("/com/example/JAVAFX/CRISTINADIAZCABELLO/vistas/ControladorElegirEmoji.fxml", "Controlador Emoji", (loader) -> {
+        abrirVentana("/com/example/JAVAFX/CRISTINADIAZCABELLO/vistas/ControladorElegirEmoji.fxml", "Elegir Emoji", (loader) -> {
             cElegirEmoji = loader.getController();
             cElegirEmoji.setControladorEnlace(this);
         });
@@ -243,7 +246,7 @@ public class ControladorEstadoAnimo implements Initializable {
             diaEstadoAnimoCR = new DiaEstadoAnimoCR(java.sql.Date.valueOf(getFecha()), "", "");
         }
 
-        abrirVentana("/com/example/JAVAFX/CRISTINADIAZCABELLO/vistas/ControladorDiario.fxml", "Controlador Diario", (loader) -> {
+        abrirVentana("/com/example/JAVAFX/CRISTINADIAZCABELLO/vistas/ControladorDiario.fxml", "Diario", (loader) -> {
             cDiario = loader.getController();
             cDiario.setControladorEnlace(this);
             cDiario.setDiaEstadoAnimoCR(diaEstadoAnimoCR);
@@ -271,7 +274,7 @@ public class ControladorEstadoAnimo implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setResizable(false);
             stage.setScene(scene);
-            stage.setTitle("Controlador Dia");
+            stage.setTitle("Habla sobre tu Día");
             stage.getIcons().add(new Image(getClass().getResource("/img/star.png").toString()));
             stage.show();
         }
@@ -320,6 +323,22 @@ public class ControladorEstadoAnimo implements Initializable {
             ScaleTransition scaleUp = new ScaleTransition(Duration.millis(200), imageView);
             scaleUp.setToX(1.2);
             scaleUp.setToY(1.2);
+            scaleUp.play();
+        });
+
+        imageView.setOnMouseExited(event -> {
+            ScaleTransition scaleDown = new ScaleTransition(Duration.millis(200), imageView);
+            scaleDown.setToX(1.0);
+            scaleDown.setToY(1.0);
+            scaleDown.play();
+        });
+    }
+
+    private void configurarAnimacion2(ImageView imageView) {
+        imageView.setOnMouseEntered(event -> {
+            ScaleTransition scaleUp = new ScaleTransition(Duration.millis(200), imageView);
+            scaleUp.setToX(1.03);
+            scaleUp.setToY(1.03);
             scaleUp.play();
         });
 

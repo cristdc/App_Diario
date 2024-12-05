@@ -7,6 +7,7 @@ import com.example.JAVAFX.CRISTINADIAZCABELLO.modelos.ConexionSingleton;
 import com.example.JAVAFX.CRISTINADIAZCABELLO.modelos.Dia;
 import com.example.JAVAFX.CRISTINADIAZCABELLO.modelos.DiaEstadoAnimoCR;
 import com.example.JAVAFX.CRISTINADIAZCABELLO.modelos.EstadoDeAnimo;
+import javafx.animation.RotateTransition;
 import javafx.animation.ScaleTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -62,8 +63,16 @@ public class ControladorDia implements Initializable {
         diaEstadoAnimoCRDAOclass = new DiaEstadoAnimoCRDAOclass(conexion);
         estadoDeAnimoDAOclass = new EstadoDeAnimoDAOclass(conexion);
         configurarAnimacion(imgSave);
+        configurarAnimacionRotar(imgMoon);
     }
 
+    private void configurarAnimacionRotar(ImageView imageView) {
+        RotateTransition rotateTransition = new RotateTransition(Duration.seconds(2), imageView);
+        rotateTransition.setByAngle(20);
+        rotateTransition.setAutoReverse(true);
+        rotateTransition.setCycleCount(RotateTransition.INDEFINITE);
+        rotateTransition.play();
+    }
 
     private void configurarAnimacion(ImageView imageView) {
         imageView.setOnMouseEntered(event -> {
