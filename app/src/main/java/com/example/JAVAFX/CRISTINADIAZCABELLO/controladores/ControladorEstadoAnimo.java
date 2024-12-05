@@ -99,7 +99,7 @@ public class ControladorEstadoAnimo implements Initializable {
                     setEstadoDeAnimo(estadoDeAnimo);
                 }
             } else {
-                estadoDeAnimo = new EstadoDeAnimo("/img/neutral.png", 1, 1, 1);
+                estadoDeAnimo = new EstadoDeAnimo("/img/emojiNeutral_1.png", 1, 1, 1);
                 diaEstadoAnimoCR = new DiaEstadoAnimoCR(java.sql.Date.valueOf(fecha), momentoDia, "");
                 setEstadoDeAnimo(estadoDeAnimo);
             }
@@ -124,23 +124,30 @@ public class ControladorEstadoAnimo implements Initializable {
     void delete(MouseEvent event) {
         if (cmbMomentoDia.getValue() == null) {
             mostrarAlerta(Alert.AlertType.ERROR, "Debes seleccionar un momento del día.");
-
         } else {
-            try {
-                if (conexion == null) {
-                    conexion = ConexionSingleton.getConexion();
+            Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmacion.setTitle("Confirmación de Eliminación");
+            confirmacion.setHeaderText("Estás a punto de eliminar todos los datos.");
+            confirmacion.setContentText("¿Estás seguro de que deseas continuar?");
+
+            confirmacion.showAndWait().ifPresent(response -> {
+                if (response == ButtonType.OK) {
+                    try {
+                        if (conexion == null) {
+                            conexion = ConexionSingleton.getConexion();
+                        }
+
+                        diaEstadoAnimoCRDAOclass.delete(fecha, cmbMomentoDia.getValue());
+                        estadoDeAnimoDAOclass.delete(id_estado);
+                        diaDAOclass.delete(fecha);
+
+                        mostrarAlerta(Alert.AlertType.INFORMATION, "Todos los datos han sido eliminados correctamente.");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        mostrarAlerta(Alert.AlertType.ERROR, "Error al eliminar los datos: " + e.getMessage());
+                    }
                 }
-
-                diaEstadoAnimoCRDAOclass.delete(fecha, cmbMomentoDia.getValue());
-                estadoDeAnimoDAOclass.delete(id_estado);
-                diaDAOclass.delete(fecha);
-
-                mostrarAlerta(Alert.AlertType.INFORMATION, "Todos los datos han sido eliminados correctamente.");
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                mostrarAlerta(Alert.AlertType.ERROR, "Error al eliminar los datos: " + e.getMessage());
-            }
+            });
         }
     }
     @FXML
@@ -170,7 +177,7 @@ public class ControladorEstadoAnimo implements Initializable {
                 int paciencia = spnPaciencia.getValue();
                 String momentoDia = cmbMomentoDia.getValue();
                 String descripcion = cDiario != null ? cDiario.getTexto() : "";
-                String emoji = cElegirEmoji != null ? cElegirEmoji.getImage() : "/img/neutral.png";
+                String emoji = cElegirEmoji != null ? cElegirEmoji.getImage() : "/img/emojiNeutral_1.png";
 
                 estadoDeAnimo = estadoDeAnimoDAOclass.getEstadoDeAnimo(fecha, momentoDia);
                 if (estadoDeAnimo == null) {

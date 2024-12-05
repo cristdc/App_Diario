@@ -7,6 +7,7 @@ import com.example.JAVAFX.CRISTINADIAZCABELLO.modelos.ConexionSingleton;
 import com.example.JAVAFX.CRISTINADIAZCABELLO.modelos.Dia;
 import com.example.JAVAFX.CRISTINADIAZCABELLO.modelos.DiaEstadoAnimoCR;
 import com.example.JAVAFX.CRISTINADIAZCABELLO.modelos.EstadoDeAnimo;
+import javafx.animation.ScaleTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -17,6 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -32,7 +34,7 @@ public class ControladorDia implements Initializable {
     @FXML
     private ComboBox<String> cmbTiempo;
     @FXML
-    private ImageView imgFlechaAtras, imgFondo, imgMoon, imgPostIt, imgTiempo, imgZZZ, imgSave;
+    private ImageView imgFondo, imgMoon, imgPostIt, imgTiempo, imgZZZ, imgSave;
     @FXML
     private Label lbCalidadSueño, lbSiesta;
     @FXML
@@ -59,12 +61,28 @@ public class ControladorDia implements Initializable {
         diaDAOclass = new DiaDAOclass(conexion);
         diaEstadoAnimoCRDAOclass = new DiaEstadoAnimoCRDAOclass(conexion);
         estadoDeAnimoDAOclass = new EstadoDeAnimoDAOclass(conexion);
+        configurarAnimacion(imgSave);
     }
 
+
+    private void configurarAnimacion(ImageView imageView) {
+        imageView.setOnMouseEntered(event -> {
+            ScaleTransition scaleUp = new ScaleTransition(Duration.millis(200), imageView);
+            scaleUp.setToX(1.2);
+            scaleUp.setToY(1.2);
+            scaleUp.play();
+        });
+
+        imageView.setOnMouseExited(event -> {
+            ScaleTransition scaleDown = new ScaleTransition(Duration.millis(200), imageView);
+            scaleDown.setToX(1.0);
+            scaleDown.setToY(1.0);
+            scaleDown.play();
+        });
+    }
     private void configurarComboBoxTiempo() {
         cmbTiempo.getItems().addAll("Soleado", "Nublado", "Lluvia", "Granizo");
     }
-
     private void configurarSliderSueño() {
         sliderSueño.setMin(0);
         sliderSueño.setMax(10);

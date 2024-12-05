@@ -31,7 +31,7 @@
                   <Image url="@/img/iconBin.png" />
                </image>
             </ImageView>
-            <ComboBox fx:id="cmbMomentoDia" prefHeight="30.0" prefWidth="158.0" promptText="Momento Día" style="-fx-background-color: #ffecd6;">
+            <ComboBox fx:id="cmbMomentoDia" prefHeight="30.0" prefWidth="191.0" promptText="Momento Día" style="-fx-background-color: #ffecd6;">
                <padding>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                </padding></ComboBox>
