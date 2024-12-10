@@ -40,9 +40,12 @@ import static java.lang.System.exit;
 
 public class ControladorPrincipal implements Initializable {
 
-    @FXML private ImageView imgBuscar, imgLeftArrow, imgRightArrow;
-    @FXML private Label txtAño, txtMes;
-    @FXML private GridPane calendarGrid;
+    @FXML
+    private ImageView imgBuscar, imgLeftArrow, imgRightArrow;
+    @FXML
+    private Label txtAño, txtMes;
+    @FXML
+    private GridPane calendarGrid;
 
     private ControladorBuscarFecha controladorBuscarFecha;
     private ControladorEstadoAnimo controladorEstadoAnimo;
@@ -85,21 +88,23 @@ public class ControladorPrincipal implements Initializable {
             }
         }
     }
+
     private void setDiasSemana() {
         String[] diasSemana = {"Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"};
         for (int i = 0; i < diasSemana.length; i++) {
             Label diaLabel = new Label(diasSemana[i]);
             diaLabel.setStyle(
                     "-fx-text-fill: #f2d3ab; " +
-                    "-fx-font-weight: bold; " +
-                    "-fx-font-family: Tahoma; " +
-                    "-fx-font: 14px;"
+                            "-fx-font-weight: bold; " +
+                            "-fx-font-family: Tahoma; " +
+                            "-fx-font: 14px;"
             );
             diaLabel.setMinWidth(50);
             diaLabel.setAlignment(Pos.CENTER);
             calendarGrid.add(diaLabel, i, 0);
         }
     }
+
     private void crearBotonDeDia(LocalDate fechaCalendario, int semana, int diaDeSemana) {
         if (fechaCalendario.getMonth().equals(currentYearMonth.getMonth())) {
             Button botonDia = new Button(String.valueOf(fechaCalendario.getDayOfMonth()));
@@ -135,7 +140,7 @@ public class ControladorPrincipal implements Initializable {
             controladorEstadoAnimo = loader.getController();
 
             controladorEstadoAnimo.setControladorEnlace(this);
-            
+
 
             controladorEstadoAnimo.setFecha(fechaCalendario);
 
@@ -177,9 +182,11 @@ public class ControladorPrincipal implements Initializable {
     public Dia obtenerDiaSeleccionado() {
         return obtenerDia("SELECT * FROM `Dia` WHERE fecha = ?");
     }
+
     public DiaEstadoAnimoCR obtenerDiaEstadoAnimoSeleccionado() {
         return obtenerDiaEstadoAnimo("SELECT * FROM `Dia_EstadoAnimo_CR` WHERE fecha = ?");
     }
+
     public EstadoDeAnimo obtenerEstadoAnimoSeleccionado() {
         return obtenerEstadoAnimo("SELECT e.* from Estado_de_Animo as e inner join Dia_EstadoAnimo_CR as cr ON e.id_estado = cr.id_estado where cr.fecha = ? AND cr.momento_dia = ?");
     }
@@ -202,6 +209,7 @@ public class ControladorPrincipal implements Initializable {
         }
         return null;
     }
+
     private DiaEstadoAnimoCR obtenerDiaEstadoAnimo(String consulta) {
         LocalDate fechaSeleccionada = LocalDate.of(currentYearMonth.getYear(), currentYearMonth.getMonth().getValue(), selectedDay);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -223,6 +231,7 @@ public class ControladorPrincipal implements Initializable {
         }
         return null;
     }
+
     private EstadoDeAnimo obtenerEstadoAnimo(String consulta) {
         LocalDate fechaSeleccionada = LocalDate.of(currentYearMonth.getYear(), currentYearMonth.getMonth().getValue(), selectedDay);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -261,6 +270,7 @@ public class ControladorPrincipal implements Initializable {
         currentYearMonth = currentYearMonth.plusMonths(1);
         actualizarCalendario();
     }
+
     @FXML
     private void pasarMesPasado() {
         currentYearMonth = currentYearMonth.minusMonths(1);
@@ -275,6 +285,8 @@ public class ControladorPrincipal implements Initializable {
         conexion = ConexionSingleton.getConexion();
         animarFlechas();
         configurarAnimacion(imgBuscar);
+
+        configurarEventosDeTeclado();
     }
 
     public void irAFecha(LocalDate fecha) {
@@ -287,6 +299,7 @@ public class ControladorPrincipal implements Initializable {
         animarFlechaIzquierda();
         animarFlechaDerecha();
     }
+
     private void animarFlechaIzquierda() {
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.ZERO, new KeyValue(imgLeftArrow.translateXProperty(), 0)),
@@ -297,6 +310,7 @@ public class ControladorPrincipal implements Initializable {
         timeline.setAutoReverse(true);
         timeline.play();
     }
+
     private void animarFlechaDerecha() {
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.ZERO, new KeyValue(imgRightArrow.translateXProperty(), 0)),
@@ -307,6 +321,7 @@ public class ControladorPrincipal implements Initializable {
         timeline.setAutoReverse(true);
         timeline.play();
     }
+
     private void configurarAnimacion(ImageView imageView) {
         imageView.setOnMouseEntered(event -> {
             ScaleTransition scaleUp = new ScaleTransition(Duration.millis(200), imageView);
@@ -323,5 +338,24 @@ public class ControladorPrincipal implements Initializable {
         });
     }
 
+    private void configurarEventosDeTeclado() {
+        calendarGrid.sceneProperty().addListener((observable, oldScene, newScene) -> {
+            if (newScene != null) {
+                newScene.getRoot().requestFocus(); // Asegura el foco en la escena
+                newScene.setOnKeyPressed(event -> {
+                    switch (event.getCode()) {
+                        case RIGHT:
+                            pasarMesSiguiente();
+                            break;
+                        case LEFT:
+                            pasarMesPasado();
+                            break;
+                        default:
+                            break;
+                    }
+                });
+            }
+        });
+    }
 
 }
