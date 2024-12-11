@@ -228,6 +228,10 @@ public class ControladorEstadoAnimo implements Initializable {
     private void mostrarAlerta(Alert.AlertType tipo, String mensaje) {
         Alert alert = new Alert(tipo);
         alert.setContentText(mensaje);
+        ImageView icono = new ImageView(new Image(getClass().getResource("/img/star.png").toString()));
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(getClass().getResource("/img/star.png").toString()));
+
         alert.show();
     }
 
@@ -257,7 +261,7 @@ public class ControladorEstadoAnimo implements Initializable {
     @FXML
     private void abrirControladorDia(MouseEvent event) throws IOException {
         if (diaEstadoAnimoCR == null || estadoDeAnimo == null) {
-            mostrarAlerta(Alert.AlertType.INFORMATION, "Debes rellenar y guardar el resto de datos antes de continuar.");
+            mostrarAlerta(Alert.AlertType.INFORMATION, "Debes elegir un momento del día.");
 
         } else {
             diaEstadoAnimoCR = new DiaEstadoAnimoCR(java.sql.Date.valueOf(getFecha()), "", "");

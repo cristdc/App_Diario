@@ -15,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
@@ -133,6 +134,10 @@ public class ControladorDia implements Initializable {
     private void mostrarAlerta(Alert.AlertType tipo, String mensaje) {
         Alert alert = new Alert(tipo);
         alert.setContentText(mensaje);
+        ImageView icono = new ImageView(new Image(getClass().getResource("/img/star.png").toString()));
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(getClass().getResource("/img/star.png").toString()));
+
         alert.show();
     }
 

@@ -262,6 +262,10 @@ public class ControladorPrincipal implements Initializable {
         alerta.setTitle("Error");
         alerta.setHeaderText(encabezado);
         alerta.setContentText(mensaje);
+        ImageView icono = new ImageView(new Image(getClass().getResource("/img/star.png").toString()));
+        Stage stage = (Stage) alerta.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(getClass().getResource("/img/star.png").toString()));
+
         alerta.showAndWait();
     }
 

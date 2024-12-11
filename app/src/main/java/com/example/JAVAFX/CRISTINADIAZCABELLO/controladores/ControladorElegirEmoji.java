@@ -11,6 +11,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 
 public class ControladorElegirEmoji implements Initializable {
 
@@ -79,6 +81,10 @@ public class ControladorElegirEmoji implements Initializable {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Cambio de Emoji");
         alert.setContentText(mensaje);
+        ImageView icono = new ImageView(new Image(getClass().getResource("/img/star.png").toString()));
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(getClass().getResource("/img/star.png").toString()));
+
         alert.showAndWait();
     }
 }
