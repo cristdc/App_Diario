@@ -21,8 +21,9 @@ public class ConexionSingleton {
         if(conexion==null){
             try{
                 conexion = conectar();
+                System.out.println("Conexión establecida");
             }catch (IOException e){
-                System.out.println(e.getMessage());
+                System.out.println("No se pudo conectar");
             }
         }
         return conexion;
