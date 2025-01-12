@@ -24,15 +24,19 @@ javafx {
 
 dependencies {
     implementation'org.mariadb.jdbc:mariadb-java-client:3.1.2'
+
+    implementation 'net.sf.jasperreports:jasperreports:7.0.1'
+    implementation 'net.sf.jasperreports:jasperreports-pdf:7.0.0' //Exportar PDF
+    implementation 'net.sf.jasperreports:jasperreports-charts:7.0.1' //Charts
 }
 
 mainClassName = 'com.example.JAVAFX.CRISTINADIAZCABELLO.Main'
 
 sourceSets {
-  main {
-    resources {
-        srcDirs = ["src/main/java","src/main/resources"]
-        includes = ["**/*.fxml","**/*.properties","**/*.png","**/*.ttf","**/*.css"]  //Importante para poder abrir una extensión no reconocida
+    main {
+        resources {
+            srcDirs = ["src/main/java","src/main/resources"]
+            includes = ["**/*.fxml","**/*.properties","**/*.jasper","**/*.png","**/*.gif"]
+        }
     }
-  }
 }

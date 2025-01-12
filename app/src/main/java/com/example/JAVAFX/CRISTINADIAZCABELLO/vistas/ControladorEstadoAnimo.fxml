@@ -31,6 +31,14 @@
                   <Image url="@/img/iconBin.png" />
                </image>
             </ImageView>
+            <ImageView fx:id="imgInforme" fitHeight="24.0" fitWidth="27.0" onMouseClicked="#abrirControladorInforme" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@/img/informes.png" />
+               </image>
+               <HBox.margin>
+                  <Insets right="15.0" />
+               </HBox.margin>
+            </ImageView>
             <ComboBox fx:id="cmbMomentoDia" prefHeight="30.0" prefWidth="191.0" promptText="Momento Día" style="-fx-background-color: #ffecd6;">
                <padding>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />

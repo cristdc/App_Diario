@@ -32,7 +32,7 @@ import javafx.util.Duration;
 public class ControladorEstadoAnimo implements Initializable {
 
     @FXML
-    private ImageView imgDescribeTuDia, imgDescripcionDia, imgEmoji, imgSave, imgDelete;
+    private ImageView imgDescribeTuDia, imgDescripcionDia, imgEmoji, imgSave, imgDelete,  imgInforme;
     @FXML
     private Spinner<Integer> spnFuerzaSentimiento, spnGradoProductividad, spnPaciencia;
     @FXML
@@ -73,6 +73,7 @@ public class ControladorEstadoAnimo implements Initializable {
         configurarAnimacion2(imgDescribeTuDia);
         configurarAnimacion2(imgDescripcionDia);
         configurarAnimacion2(imgEmoji);
+        configurarAnimacion(imgInforme);
 
         conexion = ConexionSingleton.getConexion();
         diaDAOclass = new DiaDAOclass(conexion);
@@ -240,6 +241,13 @@ public class ControladorEstadoAnimo implements Initializable {
         abrirVentana("/com/example/JAVAFX/CRISTINADIAZCABELLO/vistas/ControladorElegirEmoji.fxml", "Elegir Emoji", (loader) -> {
             cElegirEmoji = loader.getController();
             cElegirEmoji.setControladorEnlace(this);
+        });
+    }
+    @FXML
+    void abrirControladorInforme(MouseEvent event) throws IOException {
+        abrirVentana("/com/example/JAVAFX/CRISTINADIAZCABELLO/vistas/ControladorInforme.fxml", "Informe", (loader) -> {
+            ControladorInforme cInforme = loader.getController();
+            cInforme.setControladorEnlace(this);
         });
     }
     @FXML

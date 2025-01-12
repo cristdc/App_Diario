@@ -32,9 +32,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.Properties;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import static java.lang.System.exit;
 
@@ -81,9 +79,10 @@ public class ControladorPrincipal implements Initializable {
         int diaDeSemanaDeInicio = primerDiaDelMes.getDayOfWeek().getValue();
         LocalDate fechaCalendario = primerDiaDelMes.minusDays(diaDeSemanaDeInicio - 1);
 
+        List<Integer> seleccionado = obtenerDiasRellenos(primerDiaDelMes);
         for (int semana = 1; semana < 7; semana++) {
             for (int diaDeSemana = 0; diaDeSemana < 7; diaDeSemana++) {
-                crearBotonDeDia(fechaCalendario, semana, diaDeSemana);
+                crearBotonDeDia(fechaCalendario, semana, diaDeSemana, seleccionado.contains(fechaCalendario.getDayOfMonth()));
                 fechaCalendario = fechaCalendario.plusDays(1);
             }
         }
@@ -105,17 +104,12 @@ public class ControladorPrincipal implements Initializable {
         }
     }
 
-    private void crearBotonDeDia(LocalDate fechaCalendario, int semana, int diaDeSemana) {
+    private void crearBotonDeDia(LocalDate fechaCalendario, int semana, int diaDeSemana, boolean seleccionado) {
         if (fechaCalendario.getMonth().equals(currentYearMonth.getMonth())) {
             Button botonDia = new Button(String.valueOf(fechaCalendario.getDayOfMonth()));
             botonDia.setMinSize(50, 50);
-            String estiloNormal = "-fx-font: 14px \"Tahoma\"; "
-                    + "-fx-background-color: #113A5B; "
-                    + "-fx-font-weight: bold; "
-                    + "-fx-border-color: #f2d3ab; "
-                    + "-fx-border-width: 1px;"
-                    + "-fx-text-fill: #f2d3ab;";
-            botonDia.setStyle(estiloNormal);
+
+            String estiloNormal;
 
             String estiloHover = "-fx-font: 14px \"Tahoma\"; "
                     + "-fx-background-color:  #0d2b45; "
@@ -123,13 +117,34 @@ public class ControladorPrincipal implements Initializable {
                     + "-fx-border-color: #f2d3ab; "
                     + "-fx-border-width: 1px;"
                     + "-fx-text-fill: #f2d3ab;";
+
+            if (seleccionado) {
+                estiloNormal = "-fx-font: 14px \"Tahoma\"; "
+                        + "-fx-background-color: #113A5B; "
+                        + "-fx-font-weight: bold; "
+                        + "-fx-border-color: #f2d3ab; "
+                        + "-fx-border-width: 1px;"
+                        + "-fx-text-fill: red;";  // Cambiar el color a rojo
+            } else {
+                estiloNormal = "-fx-font: 14px \"Tahoma\"; "
+                        + "-fx-background-color: #113A5B; "
+                        + "-fx-font-weight: bold; "
+                        + "-fx-border-color: #f2d3ab; "
+                        + "-fx-border-width: 1px;"
+                        + "-fx-text-fill: #f2d3ab;";
+            }
+
+            botonDia.setStyle(estiloNormal);
+
             botonDia.setOnMouseEntered(event -> botonDia.setStyle(estiloHover));
             botonDia.setOnMouseExited(event -> botonDia.setStyle(estiloNormal));
 
             botonDia.setOnAction(event -> manejarClickBotonDia(fechaCalendario));
+
             calendarGrid.add(botonDia, diaDeSemana, semana);
         }
     }
+
 
     private void manejarClickBotonDia(LocalDate fechaCalendario) {
         try {
@@ -210,6 +225,45 @@ public class ControladorPrincipal implements Initializable {
         return null;
     }
 
+    private Dia obtenerDia(LocalDate fecha){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formattedDate = fecha.format(formatter);
+        String consulta = "SELECT * FROM Dia WHERE fecha = ?";
+        try (PreparedStatement ps = conexion.prepareStatement(consulta)) {
+            ps.setString(1, formattedDate);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    System.out.println(ps);
+                    return new Dia(rs.getDate("fecha"), rs.getInt("calidad_sueño"), rs.getString("clima"), rs.getBoolean("siesta"), rs.getString("retos"));
+                }
+            }
+        } catch (SQLException e) {
+            mostrarAlertaError("Error al obtener los datos del día", e.getMessage());
+        }
+        return null;
+    }
+
+    private ArrayList<Integer> obtenerDiasRellenos(LocalDate fecha){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-yyyy");
+        String formattedDate = fecha.format(formatter);
+        String consulta = "SELECT DATE_FORMAT(fecha,'%e') FROM Dia WHERE date_format(fecha,'%m-%Y') = ? ;";
+        ArrayList<Integer> dias = new ArrayList<>();
+        try (PreparedStatement ps = conexion.prepareStatement(consulta)) {
+            ps.setString(1, formattedDate);
+            System.out.println(formattedDate);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    System.out.println(ps);
+                    dias.add(rs.getInt(1));
+                }
+            }
+        } catch (SQLException e) {
+            mostrarAlertaError("Error al obtener los datos del día", e.getMessage());
+        }
+        System.out.println(dias);
+        return dias;
+    }
+
     private DiaEstadoAnimoCR obtenerDiaEstadoAnimo(String consulta) {
         LocalDate fechaSeleccionada = LocalDate.of(currentYearMonth.getYear(), currentYearMonth.getMonth().getValue(), selectedDay);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -285,8 +339,9 @@ public class ControladorPrincipal implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         currentYearMonth = YearMonth.now();
         selectedDay = LocalDate.now().getDayOfMonth();
-        actualizarCalendario();
+
         conexion = ConexionSingleton.getConexion();
+        actualizarCalendario();
         animarFlechas();
         configurarAnimacion(imgBuscar);
 

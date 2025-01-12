@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.web.WebView?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="636.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.JAVAFX.CRISTINADIAZCABELLO.controladores.ControladorInforme">
+   <children>
+      <ToolBar prefHeight="40.0" prefWidth="600.0" style="-fx-background-color: #0d2b45;">
+        <items>
+            <ImageView fx:id="imgInforme" fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@/img/informes.png" />
+               </image>
+            </ImageView>
+            <CheckBox fx:id="chkIncrustado" mnemonicParsing="false" text="Incrustado" textFill="#ffecd6">
+               <padding>
+                  <Insets left="15.0" right="15.0" />
+               </padding>
+            </CheckBox>
+            <Label text="Paciencia:" textFill="#ffecd6" />
+            <TextField fx:id="miTexto" prefHeight="26.0" prefWidth="56.0" />
+            <BorderPane prefHeight="30.0" prefWidth="351.0">
+               <right>
+                  <HBox prefHeight="30.0" prefWidth="247.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Button fx:id="btnInformeBasicoImg" mnemonicParsing="false" onAction="#abrirInformeBasico" style="-fx-background-color: #ffecd6;" text="Informe básico + img">
+                           <HBox.margin>
+                              <Insets right="15.0" />
+                           </HBox.margin></Button>
+                        <Button fx:id="btnInformeGrafica" mnemonicParsing="false" onAction="#abrirInformeGrafica" style="-fx-background-color: #ffecd6;" text="Informe Gráfica" />
+                     </children>
+                  </HBox>
+               </right>
+            </BorderPane>
+        </items>
+      </ToolBar>
+      <VBox prefHeight="361.0" prefWidth="600.0" style="-fx-background-color: #203c56;">
+         <children>
+            <WebView fx:id="wv" prefHeight="384.0" prefWidth="600.0" />
+         </children>
+      </VBox>
+   </children>
+</VBox>
