@@ -1,0 +1,153 @@
+<!-- Created with Jaspersoft Studio version 7.0.1.final using JasperReports Library version 7.0.1-573496633c2b4074e32f433154b543003f7d2498  -->
+<jasperReport name="informeCompuesta" language="java" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c368610e-5bee-4e75-8f1e-ecda64380534">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="47"/>
+	<property name="ireport.y" value="451"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value="YERpYXJpb2AuYERpYV9Fc3RhZG9Bbmltb19DUmAgQVMgLDE1LDE0MSwzYmJlODU3MC0zNGU0LTQ4&#xa;NjktYWI5OC1iNjgxMTY2OWQ1N2Q7YERpYXJpb2AuYERpYWAgQVMgLDE5NSwyMzgsNWIxODdkZDgt&#xa;NjU0Ni00OGZiLTk1MjgtMjZiODJiNmU1Y2RmO2BEaWFyaW9gLmBFc3RhZG9fZGVfQW5pbW9gIEFT&#xa;ICwxOTUsMTUsNGIwMjA2NDAtZjRkNy00NjM1LWI5OWUtNGQ4MzBiMDAxYmI2Ow=="/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MYSQL - AWS -Diario"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50.0" bold="false"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Times New Roman" fontSize="18.0" bold="false"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14.0" bold="true"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle mode="Opaque" backcolor="#F0EFEF">
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+		</conditionalStyle>
+	</style>
+	<dataset name="PieChartDataset" uuid="21b70311-b650-4678-a39c-887917366bf0"/>
+	<query language="SQL"><![CDATA[SELECT `Diario`.`Dia_EstadoAnimo_CR`.id_estado,
+	`Diario`.`Dia_EstadoAnimo_CR`.fecha,
+	`Diario`.`Dia_EstadoAnimo_CR`.momento_dia,
+	`Diario`.`Estado_de_Animo`.paciencia,
+	`Diario`.`Dia`.calidad_sueño
+FROM `Diario`.`Dia_EstadoAnimo_CR`
+	INNER JOIN `Diario`.`Estado_de_Animo` ON 
+	 `Diario`.`Dia_EstadoAnimo_CR`.id_estado = `Diario`.`Estado_de_Animo`.id_estado 
+	INNER JOIN `Diario`.`Dia` ON 
+	 `Diario`.`Dia_EstadoAnimo_CR`.fecha = `Diario`.`Dia`.fecha]]></query>
+	<field name="id_estado" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id_estado"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_estado"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Dia_EstadoAnimo_CR"/>
+	</field>
+	<field name="fecha" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="fecha"/>
+		<property name="com.jaspersoft.studio.field.label" value="fecha"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Dia_EstadoAnimo_CR"/>
+	</field>
+	<field name="momento_dia" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="momento_dia"/>
+		<property name="com.jaspersoft.studio.field.label" value="momento_dia"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Dia_EstadoAnimo_CR"/>
+	</field>
+	<field name="paciencia" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="paciencia"/>
+		<property name="com.jaspersoft.studio.field.label" value="paciencia"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Estado_de_Animo"/>
+	</field>
+	<field name="calidad_sueño" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="calidad_sueño"/>
+		<property name="com.jaspersoft.studio.field.label" value="calidad_sueño"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Dia"/>
+	</field>
+	<background height="555" splitType="Stretch">
+		<element kind="line" uuid="ebeedd7d-68bc-411e-9f52-5c762b989974" x="201" y="431" width="117" height="1">
+			<printWhenExpression><![CDATA[Boolean.FALSE]]></printWhenExpression>
+			<pen lineWidth="3.0" lineStyle="Dotted" lineColor="#996600"/>
+		</element>
+		<element kind="line" uuid="50033920-6ece-4e33-9058-4e5a2a9855ad" x="72" y="37" width="204" height="1">
+			<printWhenExpression><![CDATA[Boolean.FALSE]]></printWhenExpression>
+			<pen lineWidth="3.0" lineStyle="Dotted" lineColor="#996600"/>
+		</element>
+		<element kind="image" uuid="01667c32-732e-443e-bee9-63b4bdf37baa" x="-30" y="50" width="280" height="270">
+			<expression><![CDATA["mariposa.png"]]></expression>
+		</element>
+		<element kind="image" uuid="916c0027-eedc-47a1-bb01-59fdda55469e" x="20" y="280" width="32" height="35">
+			<expression><![CDATA["flower.png"]]></expression>
+		</element>
+		<element kind="image" uuid="d0bb7cf0-ba0a-41da-9cef-39acaf3e8fa5" x="82" y="70" width="41" height="38">
+			<expression><![CDATA["flower.png"]]></expression>
+		</element>
+	</background>
+	<title height="94" splitType="Stretch">
+		<element kind="staticText" uuid="0dae0af3-dd1d-4b42-b346-386af21f0689" x="336" y="65" width="449" height="29" fontSize="22.0" bold="false" hTextAlign="Right" style="SubTitle">
+			<text><![CDATA[COMPUESTO]]></text>
+		</element>
+		<element kind="frame" uuid="83f5e806-cc04-4161-87a9-07633f604bc1" mode="Opaque" x="-20" y="0" width="822" height="65" forecolor="#006699" backcolor="#006699">
+			<element kind="staticText" uuid="f5cd9ee0-5caa-4e48-8946-c7e84d82a845" x="231" y="0" width="578" height="65" fontSize="54.0" bold="false" hTextAlign="Right" style="Title">
+				<text><![CDATA[Informe Estado de Ánimo]]></text>
+			</element>
+		</element>
+	</title>
+	<pageHeader splitType="Stretch"/>
+	<columnHeader height="14" splitType="Stretch">
+		<element kind="frame" uuid="2a3d298d-90eb-4db1-919a-c9b2ed28c222" x="227" y="0" width="575" height="14">
+			<element kind="staticText" uuid="71689628-6f1b-424b-8941-240545b01ae8" positionType="Float" x="0" y="0" width="115" height="14" forecolor="#000000" fontName="Arial" fontSize="12.0" bold="true" style="Column header">
+				<text><![CDATA[id_estado]]></text>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="21e64a8c-dfed-4f99-b86d-021b102645fb"/>
+			</element>
+			<element kind="staticText" uuid="5a9f7ab2-98be-4faa-b1e1-c1cac929dbcf" positionType="Float" x="115" y="0" width="115" height="14" forecolor="#000000" fontName="Arial" fontSize="12.0" bold="true" style="Column header">
+				<text><![CDATA[fecha]]></text>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8668b0f7-9f48-41e0-9da1-9a6e968cd733"/>
+			</element>
+			<element kind="staticText" uuid="cd6fefc3-b87a-4d33-85ea-39685f99f9e9" positionType="Float" x="230" y="0" width="115" height="14" forecolor="#000000" fontName="Arial" fontSize="12.0" bold="true" style="Column header">
+				<text><![CDATA[momento_dia]]></text>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bdc45732-be58-4051-9c3f-980ac2357a04"/>
+			</element>
+			<element kind="staticText" uuid="869e1490-b797-48a6-8249-0cfa78e98ed3" positionType="Float" x="345" y="0" width="115" height="14" forecolor="#000000" fontName="Arial" fontSize="12.0" bold="true" style="Column header">
+				<text><![CDATA[paciencia]]></text>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="55158063-26b0-4674-87c4-069b2ed9bb78"/>
+			</element>
+			<element kind="staticText" uuid="117fb7cc-33a9-42f0-bc57-79503fb78e3b" positionType="Float" x="460" y="0" width="115" height="14" forecolor="#000000" fontName="Arial" fontSize="12.0" bold="true" style="Column header">
+				<text><![CDATA[calidad_sueño]]></text>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="32f9f256-f83e-410d-bfdf-6e0861b0760e"/>
+			</element>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<element kind="line" uuid="ad4e998c-7071-4467-b7fa-4441cc53d3f6" positionType="FixRelativeToBottom" x="227" y="14" width="575" height="1"/>
+			<element kind="frame" uuid="822bafe9-34ee-4b4f-aa76-3eae029c4911" x="227" y="0" width="575" height="14">
+				<element kind="textField" uuid="d9c55bb2-85e6-4039-9451-dca7033c3a3e" positionType="Float" x="0" y="0" width="115" height="14" fontName="Arial" fontSize="12.0" textAdjust="StretchHeight" blankWhenNull="true" bold="false" style="Detail">
+					<expression><![CDATA[$F{id_estado}]]></expression>
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="21e64a8c-dfed-4f99-b86d-021b102645fb"/>
+				</element>
+				<element kind="textField" uuid="e65be80e-0291-4546-9bc0-faad4ace3c6c" positionType="Float" x="115" y="0" width="115" height="14" fontName="Arial" fontSize="12.0" textAdjust="StretchHeight" blankWhenNull="true" bold="false" style="Detail">
+					<expression><![CDATA[$F{fecha}]]></expression>
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8668b0f7-9f48-41e0-9da1-9a6e968cd733"/>
+				</element>
+				<element kind="textField" uuid="1abf2e67-e735-41d7-a9f1-7d8de24c9632" positionType="Float" x="230" y="0" width="115" height="14" fontName="Arial" fontSize="12.0" textAdjust="StretchHeight" blankWhenNull="true" bold="false" style="Detail">
+					<expression><![CDATA[$F{momento_dia}]]></expression>
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bdc45732-be58-4051-9c3f-980ac2357a04"/>
+				</element>
+				<element kind="textField" uuid="7d90866e-8551-4e72-b5b6-6d6a667db98b" positionType="Float" x="345" y="0" width="115" height="14" fontName="Arial" fontSize="12.0" textAdjust="StretchHeight" blankWhenNull="true" bold="false" style="Detail">
+					<expression><![CDATA[$F{paciencia}]]></expression>
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="55158063-26b0-4674-87c4-069b2ed9bb78"/>
+				</element>
+				<element kind="textField" uuid="62ba56bd-728f-408a-a7e4-b999b7b93155" positionType="Float" x="460" y="0" width="115" height="14" fontName="Arial" fontSize="12.0" textAdjust="StretchHeight" blankWhenNull="true" bold="false" style="Detail">
+					<expression><![CDATA[$F{calidad_sueño}]]></expression>
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="32f9f256-f83e-410d-bfdf-6e0861b0760e"/>
+				</element>
+			</element>
+		</band>
+	</detail>
+	<columnFooter height="7" splitType="Stretch">
+		<element kind="line" uuid="c23ffbf7-1928-41f8-ade3-5930d9a4871d" positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1">
+			<pen lineWidth="0.5" lineColor="#999999"/>
+		</element>
+	</columnFooter>
+	<pageFooter height="16" splitType="Stretch">
+		<element kind="frame" uuid="6f4fe8ef-88ca-4d5d-b46a-054826bb7893" mode="Opaque" x="2" y="0" width="800" height="16" forecolor="#D0B48E" backcolor="#006699">
+			<element kind="textField" uuid="970781d6-87a0-4d3d-a07b-5ae173a1317a" x="753" y="0" width="40" height="16" forecolor="#FFFFFF" fontName="Arial" fontSize="12.0" evaluationTime="Report" bold="false" vTextAlign="Middle" style="Column header">
+				<expression><![CDATA[" " + $V{PAGE_NUMBER}]]></expression>
+			</element>
+			<element kind="textField" uuid="42664b34-c87b-42f8-911b-bd9c2ab9111e" x="673" y="0" width="80" height="16" forecolor="#FFFFFF" fontName="Arial" fontSize="12.0" bold="false" hTextAlign="Right" vTextAlign="Middle" style="Column header">
+				<expression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></expression>
+			</element>
+			<element kind="textField" uuid="06b3d6e8-b4a5-4251-b1fb-f640689933e8" x="2" y="0" width="197" height="16" forecolor="#FFFFFF" fontName="Arial" fontSize="12.0" pattern="EEEEE dd MMMMM yyyy" bold="false" vTextAlign="Middle" style="Column header">
+				<expression><![CDATA[new java.util.Date()]]></expression>
+			</element>
+		</element>
+	</pageFooter>
+	<summary splitType="Stretch"/>
+</jasperReport>

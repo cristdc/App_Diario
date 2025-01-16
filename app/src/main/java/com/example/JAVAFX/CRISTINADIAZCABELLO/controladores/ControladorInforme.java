@@ -1,20 +1,14 @@
 package com.example.JAVAFX.CRISTINADIAZCABELLO.controladores;
 
-import com.example.JAVAFX.CRISTINADIAZCABELLO.Dao.DiaDAOclass;
-import com.example.JAVAFX.CRISTINADIAZCABELLO.Dao.DiaEstadoAnimoCRDAOclass;
-import com.example.JAVAFX.CRISTINADIAZCABELLO.Dao.EstadoDeAnimoDAOclass;
 import com.example.JAVAFX.CRISTINADIAZCABELLO.modelos.ConexionSingleton;
 import javafx.animation.ScaleTransition;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebView;
 import javafx.stage.Modality;
@@ -25,6 +19,7 @@ import net.sf.jasperreports.engine.util.JRLoader;
 
 import javax.swing.*;
 import java.io.File;
+import java.io.InputStream;
 import java.net.URL;
 import java.sql.Connection;
 import java.util.HashMap;
@@ -38,53 +33,80 @@ public class ControladorInforme implements Initializable {
     Map parametros = new HashMap();
     @FXML
     private WebView wv;
+    @FXML
+    private Button btnInformeBasicoImg, btnInformeGrafica, btnInformeCompuesto;
+    @FXML
+    private TextField miTexto;
+    @FXML
+    private CheckBox chkIncrustado;
+    @FXML
+    private ComboBox<String> tipoGrafica;
+
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        configurarAnimacion1(imgInforme);
         conexion = ConexionSingleton.getConexion();
+
+        chkIncrustado.selectedProperty().addListener((observable, valorAnt, valorAct) -> {
+            miTexto.setDisable(valorAct);
+        });
+        miTexto.setDisable(false);
+        tipoGrafica.setItems(FXCollections.observableArrayList("informeGrafica2.jasper", "informeGrafica.jasper"));
     }
-
-    @FXML
-    private Button btnInformeBasicoImg;
-
-    @FXML
-    private Button btnInformeGrafica;
-
-    @FXML
-    private TextField miTexto;
-
-    @FXML
-    private CheckBox chkIncrustado;
-
-    @FXML
-    private ImageView imgInforme;
 
     @FXML
     void abrirInformeBasico(ActionEvent event) {
         if (chkIncrustado.isSelected()) {
-            lanzaInforme("/report/informeBasico.jasper", parametros, 0);
+            lanzaInforme("/informeBasico.jasper", parametros, 0);
         } else {
-            parametros.put("Parametro", "%" + miTexto.getText() + "%");
-            lanzaInforme("/report/informeBasico.jasper", parametros, 1);
+            parametros.put("ParameterEMOJI", "%" + miTexto.getText() + "%");
+            lanzaInforme("/informeParametros.jasper", parametros, 1);
+        }
+    }
+
+    @FXML
+    void abrirInformeCompuesto(ActionEvent event) {
+        if (chkIncrustado.isSelected()) {
+            lanzaInforme("/informeCompuesta.jasper", parametros, 0);
+        } else {
+            parametros.put("ParameterEMOJI", "%" + miTexto.getText() + "%");
+            lanzaInforme("/informeCompuesta.jasper", parametros, 1);
         }
     }
 
     @FXML
     void abrirInformeGrafica(ActionEvent event) {
-
+        if (tipoGrafica.getSelectionModel().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Información");
+            alert.setHeaderText("Alerta de Informe");
+            alert.setContentText("Introduce un valor para la búsqueda");
+            alert.showAndWait();
+        } else {
+            tipoGrafica.setOnAction(e -> {
+                String seleccionado = tipoGrafica.getSelectionModel().getSelectedItem();
+                System.out.println("Cambio detectado en ComboBox: " + seleccionado);
+            });
+            if (chkIncrustado.isSelected()) {
+                lanzaInforme("/" + tipoGrafica.getSelectionModel().getSelectedItem(), parametros, 0);
+            } else {//2 - Informe NO incrustado usa parámetro(nueva ventana)
+                lanzaInforme("/" + tipoGrafica.getSelectionModel().getSelectedItem(), parametros, 1);
+            }
+        }
     }
 
     private void lanzaInforme(String rutaInf, Map<String, Object> param, int tipo) {
         try {
-            JasperReport report = (JasperReport) JRLoader.loadObject(getClass().getResourceAsStream(rutaInf));
-            try {
-                System.out.println(this.conexion);
+            try (InputStream reportStream = getClass().getResourceAsStream(rutaInf)) {
+                if (reportStream == null) {
+                    throw new IllegalArgumentException("Report file not found: " + rutaInf);
+                }
+                JasperReport report = (JasperReport) JRLoader.loadObject(reportStream);
+
                 JasperPrint jasperPrint = JasperFillManager.fillReport(report, param, this.conexion);
 
                 if (!jasperPrint.getPages().isEmpty()) {
-
-                    String pdfOutputPath = "informe.pdf";
+                    String pdfOutputPath = "informeBasico.pdf";
                     JasperExportManager.exportReportToPdfFile(jasperPrint, pdfOutputPath);
 
                     String outputHtmlFile = "informeHTML.html";
@@ -113,32 +135,16 @@ public class ControladorInforme implements Initializable {
                 }
 
             } catch (JRException e) {
-                System.out.println(e.getMessage());
+                System.out.println("Error al generar el informe: " + e.getMessage());
                 JOptionPane.showMessageDialog(null, "Error al generar el informe: " + e.getMessage());
             }
-        } catch (JRException ex) {
-            System.out.println(ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println("Error cargando el informe: " + ex.getMessage());
         }
     }
 
-
     public void setControladorEnlace(ControladorEstadoAnimo controladorEstadoAnimo) {
         this.controladorEstadoAnimo = controladorEstadoAnimo;
-    }
-    private void configurarAnimacion1(ImageView imageView) {
-        imageView.setOnMouseEntered(event -> {
-            ScaleTransition scaleUp = new ScaleTransition(Duration.millis(200), imageView);
-            scaleUp.setToX(1.03);
-            scaleUp.setToY(1.03);
-            scaleUp.play();
-        });
-
-        imageView.setOnMouseExited(event -> {
-            ScaleTransition scaleDown = new ScaleTransition(Duration.millis(200), imageView);
-            scaleDown.setToX(1.0);
-            scaleDown.setToY(1.0);
-            scaleDown.play();
-        });
     }
 
 }

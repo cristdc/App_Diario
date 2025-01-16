@@ -1,6 +1,6 @@
-.button {
-    -fx-font: 12px "Tahoma";
-    -fx-background-color: #f2dcc2;
-    -fx-border-radius: 20;
-    -fx-background-radius: 20;
+* {
+    -fx-text-fill: #f2d3ab;
+    -fx-font-weight: bold;
+    -fx-font-family: "Tahoma";
+    -fx-font-size: 14px;
 }

@@ -1,0 +1,141 @@
+<!-- Created with Jaspersoft Studio version 7.0.1.final using JasperReports Library version 7.0.1-573496633c2b4074e32f433154b543003f7d2498  -->
+<jasperReport name="informeParametros" language="java" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c72f96d9-38c2-435f-af49-97a4a2b29c57">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="687"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MYSQL - AWS -Diario"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50.0" bold="false"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Times New Roman" fontSize="18.0" bold="false"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14.0" bold="true"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle mode="Opaque" backcolor="#F0EFEF">
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+		</conditionalStyle>
+	</style>
+	<dataset name="PieChartDataset" uuid="39581794-7f4c-48d6-8f6a-b421776f515c"/>
+	<parameter name="ParameterEMOJI" class="java.lang.String"/>
+	<query language="SQL"><![CDATA[select * from Estado_de_Animo
+where emoji
+like $P{ParameterEMOJI}]]></query>
+	<field name="id_estado" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id_estado"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_estado"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Estado_de_Animo"/>
+	</field>
+	<field name="paciencia" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="paciencia"/>
+		<property name="com.jaspersoft.studio.field.label" value="paciencia"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Estado_de_Animo"/>
+	</field>
+	<field name="fuerza_sentimiento" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="fuerza_sentimiento"/>
+		<property name="com.jaspersoft.studio.field.label" value="fuerza_sentimiento"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Estado_de_Animo"/>
+	</field>
+	<field name="grado_productividad" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="grado_productividad"/>
+		<property name="com.jaspersoft.studio.field.label" value="grado_productividad"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Estado_de_Animo"/>
+	</field>
+	<field name="emoji" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="emoji"/>
+		<property name="com.jaspersoft.studio.field.label" value="emoji"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Estado_de_Animo"/>
+	</field>
+	<background height="802" splitType="Stretch">
+		<element kind="line" uuid="9d52c925-3792-4c81-8c8c-2e363bb14c64" x="201" y="431" width="117" height="1">
+			<printWhenExpression><![CDATA[Boolean.FALSE]]></printWhenExpression>
+			<pen lineWidth="3.0" lineStyle="Dotted" lineColor="#996600"/>
+		</element>
+		<element kind="line" uuid="c312bdf6-78db-4c4b-8d2c-86c848f090c5" x="72" y="37" width="204" height="1">
+			<printWhenExpression><![CDATA[Boolean.FALSE]]></printWhenExpression>
+			<pen lineWidth="3.0" lineStyle="Dotted" lineColor="#996600"/>
+		</element>
+		<element kind="image" uuid="8dff57a3-0cdd-483f-9d79-1277f97e579d" x="-20" y="70" width="231" height="242">
+			<expression><![CDATA["mariposa.png"]]></expression>
+		</element>
+	</background>
+	<title height="94" splitType="Stretch">
+		<element kind="staticText" uuid="7a8ee983-690c-4f4d-9330-42613bd3d628" x="336" y="65" width="217" height="29" fontSize="22.0" bold="false" hTextAlign="Right" style="SubTitle">
+			<text><![CDATA[Parámetros]]></text>
+		</element>
+		<element kind="frame" uuid="29f958b3-9df5-4ee0-905e-9fd33029926f" mode="Opaque" x="-20" y="0" width="597" height="65" forecolor="#006699" backcolor="#006699">
+			<element kind="staticText" uuid="cf1fabd8-9376-4a95-a65d-c762a7404011" x="231" y="0" width="346" height="65" fontSize="54.0" bold="false" hTextAlign="Right" style="Title">
+				<text><![CDATA[Informe Estado de Ánimo]]></text>
+			</element>
+		</element>
+	</title>
+	<pageHeader splitType="Stretch"/>
+	<columnHeader height="27" splitType="Stretch">
+		<element kind="frame" uuid="793d06e1-d7cc-4d62-ad99-d289a8ce0026" x="227" y="0" width="328" height="20">
+			<element kind="staticText" uuid="c5262165-1a99-46b4-90ae-3288cecf8c9d" positionType="Float" x="0" y="0" width="65" height="20" forecolor="#000000" fontName="Arial" bold="false" style="Column header">
+				<text><![CDATA[id_estado]]></text>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7896c5bb-a104-4829-9bb2-ef6decf739d5"/>
+			</element>
+			<element kind="staticText" uuid="fe0901b9-43f3-4e7b-bd99-b80a49c12f6d" positionType="Float" x="65" y="0" width="65" height="20" forecolor="#000000" fontName="Arial" bold="false" style="Column header">
+				<text><![CDATA[paciencia]]></text>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8dfb59a4-a82e-4f40-9d0e-a11f6d979f76"/>
+			</element>
+			<element kind="staticText" uuid="d7042db7-5ddd-4bdb-ac8d-ee9fc2ee7b1f" positionType="Float" x="130" y="0" width="65" height="20" forecolor="#000000" fontName="Arial" bold="false" style="Column header">
+				<text><![CDATA[fuerza_sentimiento]]></text>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b4fdf37c-f097-49c2-ba3e-3dcb0ec6849c"/>
+			</element>
+			<element kind="staticText" uuid="95e6e130-9022-4ed7-9e92-d7270c887a93" positionType="Float" x="195" y="0" width="65" height="20" forecolor="#000000" fontName="Arial" bold="false" style="Column header">
+				<text><![CDATA[grado_productividad]]></text>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ac8e6395-db25-4b05-965d-169f3a118efa"/>
+			</element>
+			<element kind="staticText" uuid="2ed0a23b-6c97-4924-a601-491a60a798b4" positionType="Float" x="260" y="0" width="65" height="20" forecolor="#000000" fontName="Arial" bold="false" style="Column header">
+				<text><![CDATA[emoji]]></text>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="fffbbf54-8cec-4399-adc7-07f78f7d7a12"/>
+			</element>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<element kind="line" uuid="1f2efa15-468e-4870-8f24-1cb1eda2034d" positionType="FixRelativeToBottom" x="227" y="22" width="326" height="1"/>
+			<element kind="frame" uuid="dec77cf2-1014-4b3e-9934-7f0c65a83bce" x="227" y="0" width="328" height="20">
+				<element kind="textField" uuid="4542cee2-6ca0-4dd6-8cdf-9fd65e94b224" positionType="Float" x="0" y="0" width="65" height="18" fontName="Arial" fontSize="14.0" textAdjust="StretchHeight" blankWhenNull="true" bold="false" style="Detail">
+					<expression><![CDATA[$F{id_estado}]]></expression>
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7896c5bb-a104-4829-9bb2-ef6decf739d5"/>
+				</element>
+				<element kind="textField" uuid="782af710-7fba-40ed-9e01-368f06d80139" positionType="Float" x="65" y="0" width="65" height="18" fontName="Arial" fontSize="14.0" textAdjust="StretchHeight" blankWhenNull="true" bold="false" style="Detail">
+					<expression><![CDATA[$F{paciencia}]]></expression>
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8dfb59a4-a82e-4f40-9d0e-a11f6d979f76"/>
+				</element>
+				<element kind="textField" uuid="b075c066-fc26-46b3-b414-d599ebc707d1" positionType="Float" x="130" y="0" width="65" height="18" fontName="Arial" fontSize="14.0" textAdjust="StretchHeight" blankWhenNull="true" bold="false" style="Detail">
+					<expression><![CDATA[$F{fuerza_sentimiento}]]></expression>
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b4fdf37c-f097-49c2-ba3e-3dcb0ec6849c"/>
+				</element>
+				<element kind="textField" uuid="6f0f4079-0a6a-4fac-b81e-54bbe3b9fc00" positionType="Float" x="195" y="0" width="65" height="18" fontName="Arial" fontSize="14.0" textAdjust="StretchHeight" blankWhenNull="true" bold="false" style="Detail">
+					<expression><![CDATA[$F{grado_productividad}]]></expression>
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ac8e6395-db25-4b05-965d-169f3a118efa"/>
+				</element>
+				<element kind="textField" uuid="b732de71-ba12-4233-a61a-a8828e885035" positionType="Float" x="260" y="0" width="65" height="18" fontName="Arial" fontSize="14.0" textAdjust="StretchHeight" blankWhenNull="true" bold="false" style="Detail">
+					<expression><![CDATA[$F{emoji}]]></expression>
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="fffbbf54-8cec-4399-adc7-07f78f7d7a12"/>
+				</element>
+			</element>
+		</band>
+	</detail>
+	<columnFooter height="7" splitType="Stretch">
+		<element kind="line" uuid="0a05d19c-77ff-48d5-91d6-460d221419e5" positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1">
+			<pen lineWidth="0.5" lineColor="#999999"/>
+		</element>
+	</columnFooter>
+	<pageFooter height="13" splitType="Stretch">
+		<element kind="frame" uuid="21b8ec89-3912-4f38-b1d2-846c348d496b" mode="Opaque" x="2" y="0" width="555" height="13" forecolor="#D0B48E" backcolor="#006699">
+			<element kind="textField" uuid="2f1f4647-386f-4ee9-b3b1-779c70fd7960" x="513" y="0" width="40" height="13" forecolor="#FFFFFF" fontSize="10.0" evaluationTime="Report" bold="false" vTextAlign="Middle" style="Column header">
+				<expression><![CDATA[" " + $V{PAGE_NUMBER}]]></expression>
+			</element>
+			<element kind="textField" uuid="c50a7647-9d9b-4145-89d7-15adb353fac4" x="433" y="0" width="80" height="13" forecolor="#FFFFFF" fontSize="10.0" bold="false" hTextAlign="Right" vTextAlign="Middle" style="Column header">
+				<expression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></expression>
+			</element>
+			<element kind="textField" uuid="2a75ce15-0152-4154-9a45-a23c6a9d3107" x="2" y="0" width="197" height="13" forecolor="#FFFFFF" fontSize="10.0" pattern="EEEEE dd MMMMM yyyy" bold="false" vTextAlign="Middle" style="Column header">
+				<expression><![CDATA[new java.util.Date()]]></expression>
+			</element>
+		</element>
+	</pageFooter>
+	<summary splitType="Stretch"/>
+</jasperReport>
