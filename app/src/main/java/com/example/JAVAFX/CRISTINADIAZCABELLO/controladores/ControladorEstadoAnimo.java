@@ -74,6 +74,8 @@ public class ControladorEstadoAnimo implements Initializable {
         configurarAnimacion2(imgDescripcionDia);
         configurarAnimacion2(imgEmoji);
 
+        configurarTooltips();
+
         conexion = ConexionSingleton.getConexion();
         diaDAOclass = new DiaDAOclass(conexion);
         diaEstadoAnimoCRDAOclass = new DiaEstadoAnimoCRDAOclass(conexion);
@@ -84,6 +86,20 @@ public class ControladorEstadoAnimo implements Initializable {
                 cargarDatosMomentoDia(newVal);
             }
         });
+    }
+
+    private void configurarTooltips() {
+        Tooltip tooltipSave = new Tooltip("Guardar todo.");
+        Tooltip.install(imgSave, tooltipSave);
+
+        Tooltip tooltipDelete = new Tooltip("Eliminar.");
+        Tooltip.install(imgDelete, tooltipDelete);
+
+        Tooltip tooltipEmoji = new Tooltip("Elegir emoji.");
+        Tooltip.install(imgEmoji, tooltipEmoji);
+
+        Tooltip tooltipDescribeTuDia = new Tooltip("Pincha para escribir.");
+        Tooltip.install(imgDescribeTuDia, tooltipDescribeTuDia);
     }
 
     private void cargarDatosMomentoDia(String momentoDia) {

@@ -64,7 +64,10 @@ public class ControladorDia implements Initializable {
         diaEstadoAnimoCRDAOclass = new DiaEstadoAnimoCRDAOclass(conexion);
         estadoDeAnimoDAOclass = new EstadoDeAnimoDAOclass(conexion);
         configurarAnimacion(imgSave);
+        configurarAnimacion2(imgPostIt);
         configurarAnimacionRotar(imgMoon);
+        Tooltip tooltipSave = new Tooltip("Guardar todo.");
+        Tooltip.install(imgSave, tooltipSave);
     }
 
     private void configurarAnimacionRotar(ImageView imageView) {
@@ -80,6 +83,21 @@ public class ControladorDia implements Initializable {
             ScaleTransition scaleUp = new ScaleTransition(Duration.millis(200), imageView);
             scaleUp.setToX(1.2);
             scaleUp.setToY(1.2);
+            scaleUp.play();
+        });
+
+        imageView.setOnMouseExited(event -> {
+            ScaleTransition scaleDown = new ScaleTransition(Duration.millis(200), imageView);
+            scaleDown.setToX(1.0);
+            scaleDown.setToY(1.0);
+            scaleDown.play();
+        });
+    }
+    private void configurarAnimacion2(ImageView imageView) {
+        imageView.setOnMouseEntered(event -> {
+            ScaleTransition scaleUp = new ScaleTransition(Duration.millis(200), imageView);
+            scaleUp.setToX(1.05);
+            scaleUp.setToY(1.05);
             scaleUp.play();
         });
 
@@ -134,7 +152,6 @@ public class ControladorDia implements Initializable {
     private void mostrarAlerta(Alert.AlertType tipo, String mensaje) {
         Alert alert = new Alert(tipo);
         alert.setContentText(mensaje);
-        ImageView icono = new ImageView(new Image(getClass().getResource("/img/star.png").toString()));
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
         stage.getIcons().add(new Image(getClass().getResource("/img/star.png").toString()));
 
@@ -151,6 +168,7 @@ public class ControladorDia implements Initializable {
         controladorAñadirReto.setDia(getDia());
 
         Stage stage = crearVentanaModal(root, "Controlador Retos");
+        stage.getIcons().add(new Image(getClass().getResource("/img/star.png").toString()));
         stage.show();
     }
 
@@ -160,6 +178,7 @@ public class ControladorDia implements Initializable {
         stage.setResizable(false);
         stage.setScene(new Scene(root));
         stage.setTitle(titulo);
+        stage.getIcons().add(new Image(getClass().getResource("/img/star.png").toString()));
         return stage;
     }
 
