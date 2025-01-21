@@ -36,9 +36,7 @@ public class ControladorDia implements Initializable {
     @FXML
     private ComboBox<String> cmbTiempo;
     @FXML
-    private ImageView imgFondo, imgMoon, imgPostIt, imgTiempo, imgZZZ, imgSave;
-    @FXML
-    private Label lbCalidadSueño, lbSiesta;
+    private ImageView imgMoon, imgPostIt, imgTiempo, imgZZZ, imgSave;
     @FXML
     private Slider sliderSueño;
 
@@ -46,8 +44,6 @@ public class ControladorDia implements Initializable {
     private ControladorAñadirReto controladorAñadirReto;
 
     private Dia dia;
-    private DiaEstadoAnimoCR diaEstadoAnimoCR;
-    private EstadoDeAnimo estadoDeAnimo;
 
     private DiaDAOclass diaDAOclass;
     private DiaEstadoAnimoCRDAOclass diaEstadoAnimoCRDAOclass;
