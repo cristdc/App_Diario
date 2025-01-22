@@ -12,6 +12,7 @@ public class ControladorDiario implements Initializable {
     private TextField txtDiario;
 
     private ControladorEstadoAnimo cEstadoAnimo;
+    private DiaEstadoAnimoCR diaEstadoAnimoCR;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

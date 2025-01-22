@@ -244,7 +244,6 @@ public class ControladorEstadoAnimo implements Initializable {
     private void mostrarAlerta(Alert.AlertType tipo, String mensaje) {
         Alert alert = new Alert(tipo);
         alert.setContentText(mensaje);
-        ImageView icono = new ImageView(new Image(getClass().getResource("/img/star.png").toString()));
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
         stage.getIcons().add(new Image(getClass().getResource("/img/star.png").toString()));
 
