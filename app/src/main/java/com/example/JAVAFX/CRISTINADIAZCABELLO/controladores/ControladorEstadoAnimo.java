@@ -56,6 +56,8 @@ public class ControladorEstadoAnimo implements Initializable {
     private LocalDate fecha;
     private Connection conexion;
 
+    private String descripcionTemporal;
+
     public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
@@ -229,6 +231,7 @@ public class ControladorEstadoAnimo implements Initializable {
                     diaEstadoAnimoCR.setFecha(java.sql.Date.valueOf(fecha));
                     diaEstadoAnimoCRDAOclass.update(diaEstadoAnimoCR);
                 }
+                descripcionTemporal = diaEstadoAnimoCR.getDescripcion();
                 System.out.println("DIA ESTADO ANIMO CR: " + diaEstadoAnimoCR.toString());
 
                 mostrarAlerta(Alert.AlertType.INFORMATION, "Datos guardados correctamente.");
@@ -268,11 +271,30 @@ public class ControladorEstadoAnimo implements Initializable {
 
         abrirVentana("/com/example/JAVAFX/CRISTINADIAZCABELLO/vistas/ControladorDiario.fxml", "Diario", (loader) -> {
             cDiario = loader.getController();
-            cDiario.setControladorEnlace(this);
+
+            String descripcion = descripcionTemporal != null && !descripcionTemporal.isEmpty()
+                    ? descripcionTemporal
+                    : diaEstadoAnimoCR.getDescripcion();
+
+            System.out.println("DESCRIPCION al abrir bloc: " + descripcion+ "    "+diaEstadoAnimoCR.getDescripcion());
+            cDiario.setControladorEnlace(this, diaEstadoAnimoCR.getDescripcion() != null ? diaEstadoAnimoCR.getDescripcion() : "");
+
             cDiario.setDiaEstadoAnimoCR(diaEstadoAnimoCR);
         });
-
     }
+
+    public void actualizarDescripcionTemporal(String descripcion) {
+        System.out.println("Actualizando descripcion temporal: " + descripcion);
+        this.descripcionTemporal = descripcion;
+
+        if (cDiario != null) {
+            cDiario.getTexto();
+        }
+    }
+
+
+
+
     @FXML
     private void abrirControladorDia(MouseEvent event) throws IOException {
         if (diaEstadoAnimoCR == null || estadoDeAnimo == null) {
