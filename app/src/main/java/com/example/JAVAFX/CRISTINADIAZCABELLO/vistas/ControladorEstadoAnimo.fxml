@@ -15,7 +15,7 @@
    <children>
       <HBox prefHeight="24.0" prefWidth="600.0" style="-fx-background-color: #0d2b45;">
          <children>
-            <ImageView fx:id="imgSave" fitHeight="22.0" fitWidth="26.0" onMouseClicked="#save" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imgSave" accessibleText="save" fitHeight="22.0" fitWidth="26.0" onMouseClicked="#save" pickOnBounds="true" preserveRatio="true">
                <HBox.margin>
                   <Insets right="15.0" />
                </HBox.margin>
@@ -23,7 +23,7 @@
                   <Image url="@/img/save.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="imgDelete" fitHeight="22.0" fitWidth="21.0" onMouseClicked="#delete" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imgDelete" accessibleText="borrar" fitHeight="22.0" fitWidth="21.0" onMouseClicked="#delete" pickOnBounds="true" preserveRatio="true">
                <HBox.margin>
                   <Insets right="15.0" />
                </HBox.margin>
@@ -31,7 +31,7 @@
                   <Image url="@/img/iconBin.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="imgInforme" fitHeight="24.0" fitWidth="27.0" onMouseClicked="#abrirControladorInforme" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imgInforme" accessibleText="informes" fitHeight="24.0" fitWidth="27.0" onMouseClicked="#abrirControladorInforme" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@/img/informes.png" />
                </image>
@@ -68,7 +68,7 @@
       </HBox>
       <HBox prefHeight="110.0" prefWidth="560.0">
          <children>
-            <ImageView fx:id="imgEmoji" fitHeight="116.0" fitWidth="116.0" onMouseClicked="#elegirEmoji" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imgEmoji" accessibleText="elegirEmoji" fitHeight="116.0" fitWidth="116.0" onMouseClicked="#elegirEmoji" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@/img/emojiNeutral_1.png" />
                </image>
@@ -168,7 +168,7 @@
       </HBox>
       <HBox prefHeight="222.0" prefWidth="581.0">
          <children>
-            <ImageView fx:id="imgDescripcionDia" fitHeight="222.0" fitWidth="227.0" onMouseClicked="#abrirControladorDia" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imgDescripcionDia" accessibleText="sobre tu día" fitHeight="222.0" fitWidth="227.0" onMouseClicked="#abrirControladorDia" pickOnBounds="true" preserveRatio="true">
                <HBox.margin>
                   <Insets left="40.0" right="10.0" />
                </HBox.margin>
@@ -176,7 +176,7 @@
                   <Image url="@/img/flowerPostIt.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="imgDescribeTuDia" fitHeight="221.0" fitWidth="278.0" onMouseClicked="#abrirBloc" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imgDescribeTuDia" accessibleText="escribe sobre tu día" fitHeight="221.0" fitWidth="278.0" onMouseClicked="#abrirBloc" pickOnBounds="true" preserveRatio="true">
                <HBox.margin>
                   <Insets left="80.0" />
                </HBox.margin>

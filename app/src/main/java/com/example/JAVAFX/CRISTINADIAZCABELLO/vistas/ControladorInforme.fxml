@@ -28,7 +28,7 @@
                </padding></TextField>
             <BorderPane prefHeight="30.0" prefWidth="442.0">
                <right>
-                  <HBox prefHeight="30.0" prefWidth="382.0" BorderPane.alignment="CENTER">
+                  <HBox prefHeight="30.0" prefWidth="398.0" BorderPane.alignment="CENTER">
                      <children>
                         <Button fx:id="btnInformeBasicoImg" mnemonicParsing="false" onAction="#abrirInformeBasico" prefHeight="26.0" prefWidth="103.0" style="-fx-background-color: #ffecd6;" text="Básico + img">
                            <HBox.margin>
@@ -39,7 +39,7 @@
                               <Insets right="15.0" />
                            </HBox.margin></Button>
                         <Button fx:id="btnInformeGrafica" mnemonicParsing="false" onAction="#abrirInformeGrafica" prefHeight="26.0" prefWidth="62.0" style="-fx-background-color: #ffecd6;" text="Gráfica" />
-                        <ComboBox fx:id="tipoGrafica" prefHeight="26.0" prefWidth="115.0">
+                        <ComboBox fx:id="tipoGrafica" prefHeight="26.0" prefWidth="135.0">
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>

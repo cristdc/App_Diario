@@ -22,6 +22,8 @@ import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
 import java.sql.Connection;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -51,7 +53,7 @@ public class ControladorInforme implements Initializable {
             miTexto.setDisable(valorAct);
         });
         miTexto.setDisable(false);
-        tipoGrafica.setItems(FXCollections.observableArrayList("informeGrafica2.jasper", "informeGrafica.jasper"));
+        tipoGrafica.setItems(FXCollections.observableArrayList("informeGrafica.jasper", "informeGrafica2.jasper"));
     }
 
     @FXML
@@ -83,10 +85,7 @@ public class ControladorInforme implements Initializable {
             alert.setContentText("Introduce un valor para la búsqueda");
             alert.showAndWait();
         } else {
-            tipoGrafica.setOnAction(e -> {
-                String seleccionado = tipoGrafica.getSelectionModel().getSelectedItem();
-                System.out.println("Cambio detectado en ComboBox: " + seleccionado);
-            });
+            System.out.println("Tipo de gráfica seleccionada: " + tipoGrafica.getSelectionModel().getSelectedItem());
             if (chkIncrustado.isSelected()) {
                 lanzaInforme("/" + tipoGrafica.getSelectionModel().getSelectedItem(), parametros, 0);
             } else {//2 - Informe NO incrustado usa parámetro(nueva ventana)
@@ -106,10 +105,20 @@ public class ControladorInforme implements Initializable {
                 JasperPrint jasperPrint = JasperFillManager.fillReport(report, param, this.conexion);
 
                 if (!jasperPrint.getPages().isEmpty()) {
-                    String pdfOutputPath = "informeBasico.pdf";
-                    JasperExportManager.exportReportToPdfFile(jasperPrint, pdfOutputPath);
+                    // String pdfOutputPath = "informeBasico.pdf";
+                    // JasperExportManager.exportReportToPdfFile(jasperPrint, pdfOutputPath);
 
-                    String outputHtmlFile = "informeHTML.html";
+                    System.out.println(rutaInf);
+                    String outputHtmlFile = "";
+                    if(rutaInf.equals("/informeGrafica.jasper")){
+                        outputHtmlFile = "informeHTMLGrafica.html";
+
+                    }else if(rutaInf.equals("/informeGrafica2.jasper")){
+                        outputHtmlFile = "informeHTMLGrafica2.html";
+
+                    }else{
+                        outputHtmlFile = "informeHTML.html";
+                    }
                     JasperExportManager.exportReportToHtmlFile(jasperPrint, outputHtmlFile);
 
                     if (tipo == 0) {

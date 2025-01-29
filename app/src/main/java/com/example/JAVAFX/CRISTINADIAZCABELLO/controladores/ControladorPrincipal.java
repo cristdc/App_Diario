@@ -18,8 +18,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
@@ -120,11 +122,11 @@ public class ControladorPrincipal implements Initializable {
 
             if (seleccionado) {
                 estiloNormal = "-fx-font: 14px \"Tahoma\"; "
-                        + "-fx-background-color: #113A5B; "
+                        + "-fx-background-color: #103851; "
                         + "-fx-font-weight: bold; "
                         + "-fx-border-color: #f2d3ab; "
                         + "-fx-border-width: 1px;"
-                        + "-fx-text-fill: red;";  // Cambiar el color a rojo
+                        + "-fx-text-fill: #FFB341;";
             } else {
                 estiloNormal = "-fx-font: 14px \"Tahoma\"; "
                         + "-fx-background-color: #113A5B; "
@@ -143,6 +145,20 @@ public class ControladorPrincipal implements Initializable {
 
             calendarGrid.add(botonDia, diaDeSemana, semana);
         }
+    }
+    private void abrirVentana(String fxmlPath, String titulo, ControladorPrincipal.VentanaConfiguracion configuracion) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+        Parent root = loader.load();
+        configuracion.configurar(loader);
+
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.setTitle(titulo);
+        stage.getIcons().add(new Image(getClass().getResource("/img/star.png").toString()));
+        stage.show();
     }
 
 
@@ -188,6 +204,7 @@ public class ControladorPrincipal implements Initializable {
             stage.setScene(new Scene(root));
             stage.setTitle("Estado Ánimo");
             stage.getIcons().add(new Image(getClass().getResource("/img/star.png").toString()));
+            stage.setOnHiding(event -> actualizarCalendario());
             stage.show();
         } catch (IOException e) {
             System.out.println(e.getCause());
@@ -345,6 +362,13 @@ public class ControladorPrincipal implements Initializable {
         animarFlechas();
         configurarAnimacion(imgBuscar);
 
+        Tooltip tooltipBuscar = new Tooltip("Buscar fecha.");
+        Tooltip.install(imgBuscar, tooltipBuscar);
+        Tooltip tooltipIzquierda = new Tooltip("Mes anterior.");
+        Tooltip.install(imgLeftArrow, tooltipIzquierda);
+        Tooltip tooltipDerecha = new Tooltip("Mes siguiente.");
+        Tooltip.install(imgRightArrow, tooltipDerecha);
+
         configurarEventosDeTeclado();
     }
 
@@ -409,12 +433,27 @@ public class ControladorPrincipal implements Initializable {
                         case LEFT:
                             pasarMesPasado();
                             break;
+                        case KeyCode.F1:
+                            try {
+                                abrirVentana("/com/example/JAVAFX/CRISTINADIAZCABELLO/vistas/ControladorDocumentacion.fxml", "Documentación", loader -> {
+                                    ControladorDocumentacion controladorBienvenida = loader.getController();
+                                    controladorBienvenida.setControladorEnlace(this);
+                                });
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                            break;
                         default:
                             break;
                     }
                 });
             }
         });
+    }
+
+    @FunctionalInterface
+    private interface VentanaConfiguracion {
+        void configurar(FXMLLoader loader) throws IOException;
     }
 
 }

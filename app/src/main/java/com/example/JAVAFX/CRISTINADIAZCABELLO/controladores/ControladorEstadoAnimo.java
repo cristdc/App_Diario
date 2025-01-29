@@ -32,7 +32,7 @@ import javafx.util.Duration;
 public class ControladorEstadoAnimo implements Initializable {
 
     @FXML
-    private ImageView imgDescribeTuDia, imgDescripcionDia, imgEmoji, imgSave, imgDelete,  imgInforme;
+    private ImageView imgDescribeTuDia, imgDescripcionDia, imgEmoji, imgSave, imgDelete, imgInforme;
     @FXML
     private Spinner<Integer> spnFuerzaSentimiento, spnGradoProductividad, spnPaciencia;
     @FXML
@@ -74,6 +74,7 @@ public class ControladorEstadoAnimo implements Initializable {
         configurarAnimacion2(imgDescripcionDia);
         configurarAnimacion2(imgEmoji);
         configurarAnimacion(imgInforme);
+        configurarTooltips();
 
         conexion = ConexionSingleton.getConexion();
         diaDAOclass = new DiaDAOclass(conexion);
@@ -85,6 +86,17 @@ public class ControladorEstadoAnimo implements Initializable {
                 cargarDatosMomentoDia(newVal);
             }
         });
+    }
+
+    private void configurarTooltips() {
+        Tooltip tooltipSave = new Tooltip("Guardar todo.");
+        Tooltip.install(imgSave, tooltipSave);
+        Tooltip tooltipDelete = new Tooltip("Eliminar.");
+        Tooltip.install(imgDelete, tooltipDelete);
+        Tooltip tooltipEmoji = new Tooltip("Elegir emoji.");
+        Tooltip.install(imgEmoji, tooltipEmoji);
+        Tooltip tooltipDescribeTuDia = new Tooltip("Pincha para escribir.");
+        Tooltip.install(imgDescribeTuDia, tooltipDescribeTuDia);
     }
 
     private void cargarDatosMomentoDia(String momentoDia) {
@@ -155,6 +167,7 @@ public class ControladorEstadoAnimo implements Initializable {
             });
         }
     }
+
     @FXML
     private void save(MouseEvent event) {
         if (cmbMomentoDia.getValue() == null) {
@@ -243,6 +256,7 @@ public class ControladorEstadoAnimo implements Initializable {
             cElegirEmoji.setControladorEnlace(this);
         });
     }
+
     @FXML
     void abrirControladorInforme(MouseEvent event) throws IOException {
         abrirVentana("/com/example/JAVAFX/CRISTINADIAZCABELLO/vistas/ControladorInforme.fxml", "Informe", (loader) -> {
@@ -250,6 +264,7 @@ public class ControladorEstadoAnimo implements Initializable {
             cInforme.setControladorEnlace(this);
         });
     }
+
     @FXML
     private void abrirBloc(MouseEvent event) throws IOException {
         if (dia == null) {
@@ -266,6 +281,7 @@ public class ControladorEstadoAnimo implements Initializable {
         });
 
     }
+
     @FXML
     private void abrirControladorDia(MouseEvent event) throws IOException {
         if (diaEstadoAnimoCR == null || estadoDeAnimo == null) {
@@ -292,6 +308,7 @@ public class ControladorEstadoAnimo implements Initializable {
             stage.show();
         }
     }
+
     private void abrirVentana(String fxmlPath, String titulo, VentanaConfiguracion configuracion) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
         Parent root = loader.load();
@@ -310,13 +327,16 @@ public class ControladorEstadoAnimo implements Initializable {
     public void setControladorEnlace(ControladorPrincipal c) {
         this.cPrincipal = c;
     }
+
     public void setDia(Dia dia) {
         this.dia = dia;
         txtDiaMes.setText(dia.getFecha().toString());
     }
+
     public void setDiaEstadoAnimoCR(DiaEstadoAnimoCR diaEstadoAnimoCR) {
         this.diaEstadoAnimoCR = diaEstadoAnimoCR;
     }
+
     public void setEstadoDeAnimo(EstadoDeAnimo estadoDeAnimo) {
         this.estadoDeAnimo = estadoDeAnimo;
         spnFuerzaSentimiento.getValueFactory().setValue(estadoDeAnimo.getFuerzaSentimiento());
@@ -328,9 +348,11 @@ public class ControladorEstadoAnimo implements Initializable {
     public void actualizarEmoji(String emoji) {
         imgEmoji.setImage(new Image(emoji));
     }
+
     public String getCmbMomentoDia() {
         return cmbMomentoDia.getValue();
     }
+
     private void configurarAnimacion(ImageView imageView) {
         imageView.setOnMouseEntered(event -> {
             ScaleTransition scaleUp = new ScaleTransition(Duration.millis(200), imageView);
@@ -346,6 +368,7 @@ public class ControladorEstadoAnimo implements Initializable {
             scaleDown.play();
         });
     }
+
     private void configurarAnimacion2(ImageView imageView) {
         imageView.setOnMouseEntered(event -> {
             ScaleTransition scaleUp = new ScaleTransition(Duration.millis(200), imageView);

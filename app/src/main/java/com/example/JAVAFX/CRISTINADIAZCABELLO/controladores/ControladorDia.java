@@ -65,6 +65,9 @@ public class ControladorDia implements Initializable {
         estadoDeAnimoDAOclass = new EstadoDeAnimoDAOclass(conexion);
         configurarAnimacion(imgSave);
         configurarAnimacionRotar(imgMoon);
+
+        Tooltip tooltipSave = new Tooltip("Guardar todo.");
+        Tooltip.install(imgSave, tooltipSave);
     }
 
     private void configurarAnimacionRotar(ImageView imageView) {
@@ -151,6 +154,7 @@ public class ControladorDia implements Initializable {
         controladorAñadirReto.setDia(getDia());
 
         Stage stage = crearVentanaModal(root, "Controlador Retos");
+        stage.getIcons().add(new Image(getClass().getResource("/img/star.png").toString()));
         stage.show();
     }
 

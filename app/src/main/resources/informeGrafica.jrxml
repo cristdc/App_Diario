@@ -15,6 +15,24 @@
 		</conditionalStyle>
 	</style>
 	<dataset name="PieChartDataset" uuid="21b70311-b650-4678-a39c-887917366bf0"/>
+	<dataset name="Dataset1" uuid="f56ed2a7-e5e7-416a-8f01-350db0a8fc5d">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MYSQL - AWS -Diario"/>
+		<query language="SQL"><![CDATA[SELECT paciencia AS "paciencia", COUNT(*) AS "veces_puesta"
+FROM Estado_de_Animo
+GROUP BY paciencia
+ORDER BY veces_puesta DESC;
+]]></query>
+		<field name="paciencia" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.name" value="paciencia"/>
+			<property name="com.jaspersoft.studio.field.label" value="paciencia"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="Estado_de_Animo"/>
+		</field>
+		<field name="veces_puesta" class="java.lang.Long">
+			<property name="com.jaspersoft.studio.field.name" value="veces_puesta"/>
+			<property name="com.jaspersoft.studio.field.label" value="veces_puesta"/>
+		</field>
+	</dataset>
 	<query language="SQL"><![CDATA[select * from Estado_de_Animo]]></query>
 	<field name="id_estado" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.name" value="id_estado"/>
@@ -60,12 +78,16 @@
 		<element kind="image" uuid="761a9563-4174-44b9-a2a6-149da384a714" x="170" y="70" width="31" height="29">
 			<expression><![CDATA["flower.png"]]></expression>
 		</element>
-		<element kind="chart" chartType="line" uuid="ff6943c0-a9c3-4173-b40c-5d2a233cde80" x="0" y="380" width="227" height="175" evaluationTime="Report">
+		<element kind="chart" chartType="line" uuid="00e1351c-6738-485f-b84e-5b59e90d6c56" x="0" y="360" width="785" height="195" evaluationTime="Report">
 			<dataset kind="category">
+				<datasetRun uuid="925303e5-2928-40fd-a570-edad90580a37" subDataset="Dataset1">
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				</datasetRun>
 				<series>
-					<seriesExpression><![CDATA["Paciencia según el emoji"]]></seriesExpression>
+					<seriesExpression><![CDATA["Veces en las que se repite campo paciencia"]]></seriesExpression>
 					<categoryExpression><![CDATA[$F{paciencia}]]></categoryExpression>
-					<valueExpression><![CDATA[$F{id_estado}]]></valueExpression>
+					<valueExpression><![CDATA[$F{veces_puesta}]]></valueExpression>
+					<labelExpression><![CDATA["Veces en las que se repite campo paciencia"]]></labelExpression>
 				</series>
 			</dataset>
 			<plot categoryAxisLabelColor="#000000" categoryAxisTickLabelColor="#000000" categoryAxisLineColor="#000000" valueAxisLabelColor="#000000" valueAxisTickLabelColor="#000000" valueAxisLineColor="#000000"/>

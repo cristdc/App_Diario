@@ -15,6 +15,42 @@
 		</conditionalStyle>
 	</style>
 	<dataset name="PieChartDataset" uuid="21b70311-b650-4678-a39c-887917366bf0"/>
+	<dataset name="Dataset1" uuid="2e25627e-04e1-467a-940b-ab9921bf492a">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MYSQL - AWS -Diario"/>
+		<query language="SQL"><![CDATA[SELECT paciencia AS "paciencia", COUNT(*) AS "veces_puesta"
+FROM Estado_de_Animo
+GROUP BY paciencia
+ORDER BY veces_puesta DESC;
+]]></query>
+		<field name="paciencia" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.name" value="paciencia"/>
+			<property name="com.jaspersoft.studio.field.label" value="paciencia"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="Estado_de_Animo"/>
+		</field>
+		<field name="veces_puesta" class="java.lang.Long">
+			<property name="com.jaspersoft.studio.field.name" value="veces_puesta"/>
+			<property name="com.jaspersoft.studio.field.label" value="veces_puesta"/>
+		</field>
+	</dataset>
+	<dataset name="Dataset2" uuid="3493bf4f-eace-48ea-9df1-f9c5a9c71f0a">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MYSQL - AWS -Diario"/>
+		<query language="SQL"><![CDATA[SELECT fuerza_sentimiento AS "fuerza_sentimiento", COUNT(*) AS "veces_puesta"
+FROM Estado_de_Animo
+GROUP BY fuerza_sentimiento
+ORDER BY veces_puesta DESC;
+]]></query>
+		<field name="fuerza_sentimiento" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.name" value="fuerza_sentimiento"/>
+			<property name="com.jaspersoft.studio.field.label" value="fuerza_sentimiento"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="Estado_de_Animo"/>
+		</field>
+		<field name="veces_puesta" class="java.lang.Long">
+			<property name="com.jaspersoft.studio.field.name" value="veces_puesta"/>
+			<property name="com.jaspersoft.studio.field.label" value="veces_puesta"/>
+		</field>
+	</dataset>
 	<query language="SQL"><![CDATA[select * from Estado_de_Animo]]></query>
 	<field name="id_estado" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.name" value="id_estado"/>
@@ -60,22 +96,24 @@
 		<element kind="image" uuid="761a9563-4174-44b9-a2a6-149da384a714" x="170" y="70" width="31" height="29">
 			<expression><![CDATA["flower.png"]]></expression>
 		</element>
-		<element kind="chart" chartType="pie3D" uuid="9f1141c1-833f-434c-be24-521c60012a1d" x="4" y="330" width="207" height="200" evaluationTime="Report">
-			<dataset kind="pie" maxCount="5">
+		<element kind="chart" chartType="line" uuid="113ac706-c99a-4c0a-a5a8-c0c0f460f8ff" x="10" y="320" width="760" height="220" evaluationTime="Report">
+			<dataset kind="category">
+				<datasetRun uuid="7f3690ef-7b3e-4298-b78c-19395c272761" subDataset="Dataset2">
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				</datasetRun>
 				<series>
-					<keyExpression><![CDATA[$F{id_estado}]]></keyExpression>
-					<valueExpression><![CDATA[$F{paciencia}]]></valueExpression>
-					<labelExpression><![CDATA[$F{paciencia}.toString()]]></labelExpression>
+					<seriesExpression><![CDATA["veces puesta fuerza_Sentimiento"]]></seriesExpression>
+					<categoryExpression><![CDATA[$F{fuerza_sentimiento}]]></categoryExpression>
+					<valueExpression><![CDATA[$F{veces_puesta}]]></valueExpression>
+					<labelExpression><![CDATA["veces puesta fuerza_Sentimiento"]]></labelExpression>
 				</series>
 			</dataset>
-			<plot>
-				<itemLabel/>
-			</plot>
+			<plot categoryAxisLabelColor="#000000" categoryAxisTickLabelColor="#000000" categoryAxisLineColor="#000000" valueAxisLabelColor="#000000" valueAxisTickLabelColor="#000000" valueAxisLineColor="#000000"/>
 		</element>
 	</background>
 	<title height="94" splitType="Stretch">
 		<element kind="staticText" uuid="0dae0af3-dd1d-4b42-b346-386af21f0689" x="336" y="65" width="449" height="29" fontSize="22.0" bold="false" hTextAlign="Right" style="SubTitle">
-			<text><![CDATA[Gráfica 1]]></text>
+			<text><![CDATA[Gráfica 2]]></text>
 		</element>
 		<element kind="frame" uuid="83f5e806-cc04-4161-87a9-07633f604bc1" mode="Opaque" x="-20" y="0" width="822" height="65" forecolor="#006699" backcolor="#006699">
 			<element kind="staticText" uuid="f5cd9ee0-5caa-4e48-8946-c7e84d82a845" x="231" y="0" width="578" height="65" fontSize="54.0" bold="false" hTextAlign="Right" style="Title">

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Manual de Usuario - Diario</title>
+    <style>
+      :root {
+        --azul: #203c56;
+        --azulClaro: #87b8d5;
+        --carneOscuro: #ffd4a3;
+      }
+
+      body {
+        background-color: var(--azul);
+        color: var(--carneOscuro);
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        width: 80%;
+        margin: auto;
+      }
+
+      header {
+        background-color: var(--azul);
+        padding: 20px;
+        text-align: center;
+      }
+
+      h1 {
+        color: var(--azulClaro);
+        font-size: 32px;
+        margin: 0;
+      }
+
+      section {
+        margin: 20px;
+        padding: 20px;
+        background-color: var(--azul);
+        border-radius: 8px;
+        box-shadow: 0 4px 6px var(--carneOscuro);
+      }
+
+      h2 {
+        color: var(--azulClaro);
+        font-size: 28px;
+      }
+
+      h3 {
+        color: var(--azulClaro);
+        font-size: 24px;
+      }
+
+      ul {
+        color: var(--carneOscuro);
+        padding-left: 20px;
+      }
+
+      p {
+        color: var(--carneOscuro);
+        line-height: 1.6;
+      }
+
+      a {
+        color: var(--carneOscuro);
+        text-decoration: none;
+      }
+
+      img {
+        display: block;
+        width: 50%;
+        margin: 5% auto;
+        border: 3px solid var(--carneOscuro);
+      }
+
+      a:hover {
+        color: var(--carneOscuro);
+      }
+
+      button {
+        background-color: #333333;
+        color: var(--carneOscuro);
+        border: 1px solid #444444;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 16px;
+      }
+
+      button:hover {
+        background-color: var(--azul);
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Manual de Usuario - Aplicación Diario</h1>
+    </header>
+
+    <main>
+      <section id="objetivos">
+        <h2>Objetivos del Manual</h2>
+        <p>
+          Este manual tiene como finalidad ofrecerle una guía detallada para el correcto uso de la aplicación "Diario". Esta herramienta ha sido diseñada para permitirle registrar sus experiencias diarias de manera organizada, facilitando la descripción de los momentos de su mañana, tarde y noche, así como la evaluación de su estado emocional durante estos periodos. A través de esta aplicación, podrá llevar un seguimiento de su bienestar y reflexionar sobre su jornada.
+        </p>
+      </section>
+
+      <section id="contenidos">
+        <h2>Índice de Contenidos</h2>
+        <ul>
+          <h4>* Descripción del Funcionamiento</h4>
+          <li>Pantalla Principal</li>
+          <li>Pantalla de Búsqueda de Fecha</li>
+          <li>Pantalla de Estado de Ánimo</li>
+          <li>Pantalla de Diario</li>
+          <li>Pantalla de Datos del Día</li>
+          <li>Pantalla de Retos</li>
+        </ul>
+      </section>
+
+      <section id="funcionamiento">
+        <h2>Funcionamiento de la Aplicación</h2>
+        <p>
+          A continuación, encontrará una descripción detallada de las principales pantallas y funciones de la aplicación. Estas instrucciones están pensadas para guiarle paso a paso en el uso adecuado de cada sección.
+        </p>
+
+        <h3>1. Pantalla Principal</h3>
+        <p>
+          Al ingresar a la aplicación, accederá automáticamente a la pantalla principal, que presenta el calendario para seleccionar el día que desea consultar o registrar. A continuación, se detallan las acciones que puede realizar en esta pantalla:
+          <img src="./img/principal.png" alt="Pantalla Principal">
+        </p>
+        <ul>
+          <li>
+            Seleccione el día que desea consultar o registrar tocando directamente sobre la fecha deseada.
+          </li>
+          <li>
+            El ícono de la lupa le permitirá realizar una búsqueda específica de una fecha al hacer clic en él.
+          </li>
+          <li>
+            Utilice las flechas de navegación para desplazarse entre meses, tanto hacia adelante como hacia atrás.
+          </li>
+        </ul>
+
+        <h3>2. Pantalla de Búsqueda de Fecha</h3>
+        <p>
+          Al hacer clic en el ícono de la lupa, accederá a la pantalla de búsqueda de fechas, donde podrá seleccionar el día que desea consultar:
+          <img src="./img/fecha.png" alt="Pantalla de Búsqueda de Fecha">
+        </p>
+        <ul>
+          <li>
+            El botón "Buscar" le llevará directamente al día seleccionado, siempre que haya escogido una fecha válida en el selector de fechas (DatePicker).
+          </li>
+        </ul>
+
+        <h3>3. Pantalla de Estado de Ánimo</h3>
+        <p>
+          Al seleccionar un día desde la pantalla principal, accederá a la pantalla de Estado de Ánimo, donde podrá evaluar cómo se sintió a lo largo del día:
+          <img src="./img/estadoAnimo.png" alt="Pantalla de Estado de Ánimo">
+        </p>
+        <ul>
+          <li>
+            Puede hacer clic sobre el ícono de emoji para acceder a la pantalla de selección de emociones.
+          </li>
+          <li>
+            También podrá ajustar los datos utilizando los spinners disponibles para diversos aspectos de su día.
+          </li>
+          <li>
+            Si lo desea, puede hacer clic sobre el ícono del bloc para acceder a la pantalla de Diario.
+          </li>
+          <li>
+            La opción "Editar Datos" le permitirá modificar los detalles del día seleccionado desde la pantalla de Datos del Día.
+          </li>
+          <li>
+            Los botones "Guardar", "Borrar" e "Informes" le permitirán gestionar sus registros y generar informes.
+          </li>
+          <li>
+            A través del spinner, podrá elegir el momento del día que desea registrar (mañana, tarde, noche).
+          </li>
+        </ul>
+
+        <h3>4. Pantalla de Diario</h3>
+        <p>
+          Si decide hacer clic en el ícono del bloc desde la pantalla de Estado de Ánimo, accederá a la pantalla de Diario, donde podrá escribir sus pensamientos y vivencias del día:
+          <img src="./img/diario.png" alt="Pantalla de Diario">
+        </p>
+        <ul>
+          <li>
+            En el campo de texto, podrá escribir libremente sobre su día. Los datos que registre se guardarán automáticamente y estarán disponibles para su posterior consulta y modificación en la pantalla de Estado de Ánimo.
+          </li>
+        </ul>
+
+        <h3>5. Pantalla de Datos del Día</h3>
+        <p>
+          Al hacer clic en "Editar Datos del Día" desde la pantalla de Estado de Ánimo, accederá a la pantalla de Datos del Día, donde podrá modificar diversos aspectos relacionados con su jornada:
+          <img src="./img/dia.png" alt="Pantalla de Datos del Día">
+        </p>
+        <ul>
+          <li>
+            Puede seleccionar el clima del día utilizando el spinner correspondiente.
+          </li>
+          <li>
+            También podrá indicar qué tan bien ha dormido mediante un control deslizante.
+          </li>
+          <li>
+            Si lo desea, podrá marcar si ha tomado una siesta en el día.
+          </li>
+          <li>
+            Al hacer clic en "Escribir Retos", podrá acceder a la pantalla para agregar nuevos retos.
+          </li>
+        </ul>
+
+        <h3>6. Pantalla de Retos</h3>
+        <p>
+          Si decide agregar retos a su jornada, podrá hacerlo a través de la pantalla de Retos. Al hacer clic en el ícono de "Añadir Retos" desde la pantalla de Datos del Día, accederá a esta sección:
+          <img src="./img/retos.png" alt="Pantalla de Retos">
+        </p>
+        <ul>
+          <li>
+            En el campo de texto, podrá escribir los retos que se propuso para ese día. Los datos se guardarán automáticamente para su consulta futura en la pantalla de Datos del Día.
+          </li>
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>
