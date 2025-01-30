@@ -17,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -65,10 +66,50 @@ public class ControladorDia implements Initializable {
         estadoDeAnimoDAOclass = new EstadoDeAnimoDAOclass(conexion);
         configurarAnimacion(imgSave);
         configurarAnimacionRotar(imgMoon);
+        configurarEventosDeTeclado();
 
         Tooltip tooltipSave = new Tooltip("Guardar todo.");
         Tooltip.install(imgSave, tooltipSave);
     }
+    private void configurarEventosDeTeclado() {
+        imgFondo.sceneProperty().addListener((observable, oldScene, newScene) -> {
+            if (newScene != null) {
+                newScene.getRoot().requestFocus(); // Asegura el foco en la escena
+                newScene.setOnKeyPressed(event -> {
+                    switch (event.getCode()) {
+                        case KeyCode.F1:
+                            try {
+                                abrirVentana("/com/example/JAVAFX/CRISTINADIAZCABELLO/vistas/ControladorDocumentacion.fxml", "Documentación", loader -> {
+                                    ControladorDocumentacion controladorBienvenida = loader.getController();
+                                    controladorBienvenida.setControladorEnlace3(this);
+                                });
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                });
+            }
+        });
+    }
+
+    private void abrirVentana(String fxmlPath, String titulo, ControladorDia.VentanaConfiguracion configuracion) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+        Parent root = loader.load();
+        configuracion.configurar(loader);
+
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.setTitle(titulo);
+        stage.getIcons().add(new Image(getClass().getResource("/img/star.png").toString()));
+        stage.show();
+    }
+
 
     private void configurarAnimacionRotar(ImageView imageView) {
         RotateTransition rotateTransition = new RotateTransition(Duration.seconds(2), imageView);
@@ -190,4 +231,8 @@ public class ControladorDia implements Initializable {
         return fecha;
     }
 
+    @FunctionalInterface
+    private interface VentanaConfiguracion {
+        void configurar(FXMLLoader loader) throws IOException;
+    }
 }

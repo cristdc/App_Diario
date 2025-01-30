@@ -75,6 +75,7 @@ public class ControladorEstadoAnimo implements Initializable {
         configurarAnimacion2(imgEmoji);
         configurarAnimacion(imgInforme);
         configurarTooltips();
+        configurarEventosDeTeclado();
 
         conexion = ConexionSingleton.getConexion();
         diaDAOclass = new DiaDAOclass(conexion);
@@ -84,6 +85,29 @@ public class ControladorEstadoAnimo implements Initializable {
         cmbMomentoDia.valueProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal != null) {
                 cargarDatosMomentoDia(newVal);
+            }
+        });
+    }
+    private void configurarEventosDeTeclado() {
+        imgEmoji.sceneProperty().addListener((observable, oldScene, newScene) -> {
+            if (newScene != null) {
+                newScene.getRoot().requestFocus(); // Asegura el foco en la escena
+                newScene.setOnKeyPressed(event -> {
+                    switch (event.getCode()) {
+                        case KeyCode.F1:
+                            try {
+                                abrirVentana("/com/example/JAVAFX/CRISTINADIAZCABELLO/vistas/ControladorDocumentacion.fxml", "Documentación", loader -> {
+                                    ControladorDocumentacion controladorBienvenida = loader.getController();
+                                    controladorBienvenida.setControladorEnlace2(this);
+                                });
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                });
             }
         });
     }
@@ -276,7 +300,6 @@ public class ControladorEstadoAnimo implements Initializable {
 
         abrirVentana("/com/example/JAVAFX/CRISTINADIAZCABELLO/vistas/ControladorDiario.fxml", "Diario", (loader) -> {
             cDiario = loader.getController();
-            cDiario.setControladorEnlace(this);
             cDiario.setDiaEstadoAnimoCR(diaEstadoAnimoCR);
         });
 

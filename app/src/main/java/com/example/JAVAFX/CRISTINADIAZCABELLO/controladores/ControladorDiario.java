@@ -25,15 +25,6 @@ public class ControladorDiario implements Initializable {
             }
             return change;
         }));
-
-        txtDiario.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (cEstadoAnimo != null) {
-                    cEstadoAnimo.actualizarDescripcionTemporal(newValue);
-                }
-            }
-        });
     }
 
     public void setControladorEnlace(ControladorEstadoAnimo c, String descripcion) {

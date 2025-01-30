@@ -1,6 +1,8 @@
 package com.example.JAVAFX.CRISTINADIAZCABELLO.controladores;
 
 import com.example.JAVAFX.CRISTINADIAZCABELLO.modelos.Dia;
+
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -10,6 +12,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 
 public class ControladorAñadirReto implements Initializable {
